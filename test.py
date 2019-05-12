@@ -1,14 +1,14 @@
 operator = input("Znak ")
-a = input("A= ")
-b = input("B= ")
+a = int(input("A= "))
+b = int(input("B= "))
 
 if operator == "+":
     c = a + b
     print("otvet= ", c)
 elif operator == "-":
-    c = a + b
+    c = a - b
     print("otvet= ", c)
 else:
-    print("otvet HUY s gory")
+    print("ERROR")
 
 input()
