@@ -1,4 +1,3 @@
-import random
 
 class Node:
 
@@ -15,23 +14,15 @@ class LinkedList:
         self.size = 0
 
     def add_in_tail(self, item):
-
-        if self.head is None: # Если список пуст
-            self.head = item  # В поле указателя на голову записываем адрес новой Node - как текущую голову списка
+        if self.head is None:               # Если список пуст
+            self.head = item                # В поле указателя на голову записываем адрес новой Node
             self.size += 1
             self.head.index = self.size -1
-
-
-
-        else:                       # Если список не пуст
-            self.tail.next = item # записываем в поле текущей структуры Node - адрес на новый элемент Node
+        else:                               # Если список не пуст
+            self.tail.next = item           # записываем в поле текущей структуры Node - адрес на следующий элемент Node
             self.size += 1
-
-
-        self.tail = item    # В поле указателя на конец записываем адрес новой Node - как текущий конец списка
+        self.tail = item                    # В поле указателя на конец списка записываем адрес новой Node - как текущий конец списка
         self.tail.index = self.size - 1
-
-
 
     def len(self):
         return self.size
@@ -39,10 +30,8 @@ class LinkedList:
     def print_all_nodes(self):
         node = self.head
         while node != None:
-
             print(node.value, "index ", node.index)
             node = node.next
-
 
     def find(self, val):
         node = self.head
@@ -60,48 +49,42 @@ class LinkedList:
             node = node.next
 
     def find_all(self, val):
-
         node = self.head
-        while node is not None:
-
-            if node.value == val:
-                print(val)
-
-            node = node.next
-
-
-        return None
-
-
-
-    def delete(self, val, all=False):
-        node = self.head
-
+        self.s = []
         while node is not None:
             if node.value == val:
-                index_i = node.index
-
-                break
+                self.s.append(node.value)
             node = node.next
+        return print(self.s)
+
+    def delete_for_index(self, index_i):
+        node = self.head
         if (index_i > 0):
-            node = self.head
             for i in range (index_i-1):
                 node = node.next
             to_del = node.next
-
             node.next = to_del.next
-
             del(to_del)
             self.size -=1
-
         else:
             self.clean_head()
-            return
+        node = self.head
+        node.index=0
+        for i in range (self.size):
+            node.index = i
+            node = node.next
 
-
-
-
-
+    def delete(self, val, all=False):
+        node = self.head
+        while node is not None:
+            if node.value == val:
+                index_i = node.index
+                if all == False:
+                    self.delete_for_index(index_i)
+                    break
+                else:
+                    self.delete_for_index(index_i)
+            node = node.next
 
     def clean_head(self):
         temp = self.head
@@ -109,38 +92,39 @@ class LinkedList:
         del(temp)
         self.size -= 1
 
+        if self.size > 0:
+            node = self.head
+            node.index = 0
+            for i in range(self.size):
+                node.index = i
+                node = node.next
+        else: return
+
     def clean(self):
         while (self.size):
             self.clean_head()
-        print("Gotovo! size = ", self.size)
-
-
+        print("Cleared! Size =", self.size)
 
     def insert(self, afterNode, newNode):
-        pass # здесь будет ваш код
+        newNode = Node(newNode)
+        node = self.head
+        if node == None or afterNode == None:
+            self.head = newNode
+            self.size += 1
+        while node != None:
+            if node.value == afterNode:
+                temp = node.next
+                node.next = newNode
+                self.size += 1
+                node = node.next
+                node.next = temp
+            node = node.next
+        node = self.head
+        node.index = 0
+        for i in range(self.size):
+            node.index = i
+            node = node.next
 
 
 
 
-s_List = LinkedList()
-
-
-#listsize = 7
-#for i in range (listsize):
-    #s_List.add_in_tail(Node(random.randint(0,100)))
-
-s_List.add_in_tail(Node(101))
-s_List.add_in_tail(Node(102))
-s_List.add_in_tail(Node(103))
-s_List.add_in_tail(Node(104))
-s_List.add_in_tail(Node(105))
-
-s_List.delete(102)
-s_List.print_all_nodes()
-
-
-
-#s_List.find_index(0)
-
-
-#s_List.clean()
