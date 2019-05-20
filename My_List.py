@@ -30,7 +30,7 @@ class LinkedList:
     def print_all_nodes(self):
         node = self.head
         while node != None:
-            print(node.value, "index ", node.index)
+            print(node.value)
             node = node.next
 
     def find(self, val):
@@ -55,7 +55,7 @@ class LinkedList:
             if node.value == val:
                 self.s.append(node.value)
             node = node.next
-        return print(self.s)
+        return self.s
 
     def delete_for_index(self, index_i):
         node = self.head
@@ -103,7 +103,7 @@ class LinkedList:
     def clean(self):
         while (self.size):
             self.clean_head()
-        print("Cleared! Size =", self.size)
+        return self.size
 
     def insert(self, afterNode, newNode):
         newNode = Node(newNode)
@@ -124,7 +124,6 @@ class LinkedList:
         for i in range(self.size):
             node.index = i
             node = node.next
-
 
 
 
