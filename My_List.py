@@ -53,9 +53,12 @@ class LinkedList:
         self.s = []
         while node is not None:
             if node.value == val:
-                self.s.append(node.value)
+                self.s.append(node)
             node = node.next
-        return self.s
+        if (len(self.s)):
+            return self.s
+        else:
+            return None
 
     def delete_for_index(self, index_i):
         node = self.head
@@ -68,11 +71,17 @@ class LinkedList:
             self.size -=1
         else:
             self.clean_head()
+        self.re_index()
+
+    def re_index(self):
         node = self.head
-        node.index=0
-        for i in range (self.size):
-            node.index = i
-            node = node.next
+        if node !=None:
+            node.index = 0
+            for i in range(self.size):
+                node.index = i
+                node = node.next
+        else:
+            return
 
     def delete(self, val, all=False):
         node = self.head
@@ -81,49 +90,47 @@ class LinkedList:
                 index_i = node.index
                 if all == False:
                     self.delete_for_index(index_i)
-                    break
+                    return
                 else:
                     self.delete_for_index(index_i)
             node = node.next
+
 
     def clean_head(self):
         temp = self.head
         self.head = self.head.next
         del(temp)
         self.size -= 1
-
         if self.size > 0:
             node = self.head
             node.index = 0
             for i in range(self.size):
                 node.index = i
                 node = node.next
-        else: return
+        else:
+            return
 
     def clean(self):
         while (self.size):
             self.clean_head()
-        return self.size
+        if self.head == None:
+            return
 
     def insert(self, afterNode, newNode):
-        newNode = Node(newNode)
         node = self.head
         if node == None or afterNode == None:
-            self.head = newNode
+            new_Node = Node(newNode)
+            self.head = new_Node
             self.size += 1
         while node != None:
             if node.value == afterNode:
+                new_Node = Node(newNode)
                 temp = node.next
-                node.next = newNode
+                node.next = new_Node
                 self.size += 1
                 node = node.next
                 node.next = temp
             node = node.next
-        node = self.head
-        node.index = 0
-        for i in range(self.size):
-            node.index = i
-            node = node.next
-
+        self.re_index()
 
 
