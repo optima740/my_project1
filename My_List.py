@@ -14,7 +14,7 @@ class LinkedList:
         self.size = 0
 
     def add_in_tail(self, item):
-        if self.head is None:               # Если список пуст
+        if self.head is None:               # Если список пуст.
             self.head = item                # В поле указателя на голову записываем адрес новой Node
             self.size += 1
             self.head.index = self.size -1
@@ -60,17 +60,31 @@ class LinkedList:
         else:
             return None
 
+    def clean_tail(self):
+        node = self.tail
+        node1 = self.head
+        for i in range (node.index - 1):
+            node1 = node1.next
+            temp = node1
+        to_del = node1.next
+        temp.next = None
+        self.tail = temp
+        del(to_del)
+        self.size -= 1
+
     def delete_for_index(self, index_i):
         node = self.head
-        if (index_i > 0):
+        if (index_i < self.size-1 and index_i > 0):
             for i in range (index_i-1):
                 node = node.next
             to_del = node.next
             node.next = to_del.next
             del(to_del)
             self.size -=1
-        else:
+        elif index_i == 0:
             self.clean_head()
+        elif (index_i == self.size-1):
+            self.clean_tail()
         self.re_index()
 
     def re_index(self):
