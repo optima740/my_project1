@@ -104,10 +104,11 @@ class LinkedList:
                 index_i = node.index
                 if all == False:
                     self.delete_for_index(index_i)
+
                     return
                 else:
                     self.delete_for_index(index_i)
-            node = node.next
+        node = node.next
 
 
     def clean_head(self):
@@ -122,6 +123,7 @@ class LinkedList:
                 node.index = i
                 node = node.next
         else:
+            self.tail = None
             return
 
     def clean(self):
