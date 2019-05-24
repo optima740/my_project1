@@ -71,6 +71,7 @@ class LinkedList:
         self.tail = temp
         del(to_del)
         self.size -= 1
+        self.re_index()
 
     def delete_for_index(self, index_i):
         node = self.head
@@ -81,11 +82,12 @@ class LinkedList:
             node.next = to_del.next
             del(to_del)
             self.size -=1
+            self.re_index()
         elif index_i == 0:
             self.clean_head()
         elif (index_i == self.size-1):
             self.clean_tail()
-        self.re_index()
+
 
     def re_index(self):
         node = self.head
@@ -108,7 +110,7 @@ class LinkedList:
                     return
                 else:
                     self.delete_for_index(index_i)
-        node = node.next
+            node = node.next
 
 
     def clean_head(self):
