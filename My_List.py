@@ -24,6 +24,14 @@ class LinkedList:
         self.tail = item                    # В поле указателя на конец списка записываем адрес новой Node - как текущий конец списка
         self.tail.index = self.size - 1
 
+    def insert_in_head(self, item):
+        temp = self.head.next
+        temp_head = self.head
+        self.head = item
+        self.head.next = temp_head
+        self.size += 1
+        self.re_index()
+
     def len(self):
         return self.size
 
@@ -106,7 +114,6 @@ class LinkedList:
                 index_i = node.index
                 if all == False:
                     self.delete_for_index(index_i)
-
                     return
                 else:
                     self.delete_for_index(index_i)
@@ -136,10 +143,15 @@ class LinkedList:
 
     def insert(self, afterNode, newNode):
         node = self.head
-        if node == None or afterNode == None:
+        if node == None:
             new_Node = Node(newNode)
             self.head = new_Node
+            self.tail = new_Node
             self.size += 1
+            self.re_index()
+            return
+        elif afterNode == None:
+            self.insert_in_head(Node(newNode))
         while node != None:
             if node.value == afterNode:
                 new_Node = Node(newNode)
@@ -148,6 +160,8 @@ class LinkedList:
                 self.size += 1
                 node = node.next
                 node.next = temp
+                if node.next == None:
+                    self.tail = new_Node
             node = node.next
         self.re_index()
 
