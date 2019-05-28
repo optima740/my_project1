@@ -71,6 +71,7 @@ class LinkedList:
     def clean_tail(self):
         node = self.tail
         node1 = self.head
+        temp = node1
         for i in range (node.index - 1):
             node1 = node1.next
             temp = node1
@@ -144,24 +145,25 @@ class LinkedList:
     def insert(self, afterNode, newNode):
         node = self.head
         if node == None:
-            new_Node = Node(newNode)
-            self.head = new_Node
-            self.tail = new_Node
+            #new_Node = Node(newNode)
+            self.head = newNode
+            self.tail = newNode
             self.size += 1
             self.re_index()
             return
         elif afterNode == None:
-            self.insert_in_head(Node(newNode))
+            self.insert_in_head(newNode)
+            return
         while node != None:
-            if node.value == afterNode:
-                new_Node = Node(newNode)
+            if node.index == afterNode.index:
+                #new_Node = Node(newNode)
                 temp = node.next
-                node.next = new_Node
+                node.next = newNode
                 self.size += 1
                 node = node.next
                 node.next = temp
                 if node.next == None:
-                    self.tail = new_Node
+                    self.tail = newNode
             node = node.next
         self.re_index()
 
