@@ -66,7 +66,7 @@ class LinkedList:
         if (len(self.s)):
             return self.s
         else:
-            return None
+            return self.s
 
     def clean_tail(self):
         node = self.tail

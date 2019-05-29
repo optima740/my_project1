@@ -146,7 +146,8 @@ def test_find_empty():                  #тест поиска по значен
     s_List.print_all_nodes
     s_List.clean()
     f = s_List.find_all(100)
-    if f == None:
+
+    if not f:
         print("OK - net takogo elementa - spisok pust")
     else:
         print("Faile")
@@ -209,7 +210,7 @@ def test_clean():                       #тест очистки списка
 
 #est_find_all()
 #test_find_not_item()
-#test_find_empty()
+test_find_empty()
 #test_delete_head()
 #test_delete_end()
 #test_delete_all()
@@ -218,5 +219,5 @@ def test_clean():                       #тест очистки списка
 #test_insert_in_head()
 #test_delete_node()
 #test_len()
-test_clean()
+#test_clean()
 
