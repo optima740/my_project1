@@ -1,18 +1,21 @@
 def WordSearch(len,s, subs):
 
     liststr = []
-
+    i =0
     x=0
     space = 0
-    ost = len
+    ost = len-1
     i_space = 0
 
-    for i in range (lenstr(s)):
 
+    while (i!= lenstr(s)):
+
+        f = 0
         if (s[i] == ' '):
             space = i
             i_space +=1
-        if (ost == 0) and (i<(lenstr(s)-1)) and (s[i] != ' '):
+
+        if (ost == 0) and (i<(lenstr(s)-2)) and (s[i] != ' '):
             if (i_space != 0):
                 liststr.append(s[x:space])
                 delta = i - space
@@ -20,18 +23,43 @@ def WordSearch(len,s, subs):
                 i_space = 0
                 ost = len - (delta-1)
 
-            elif (i_space == 0):
-                liststr.append(s[x:i])
+            elif (i_space == 0) and (s[i+1] != ' '):
+                liststr.append(s[x:i+1])
                 x = i+1
                 ost = len
 
-        elif (ost == 0) and (i<(lenstr(s)-1)) and (s[i] == ' '):
+            elif(i_space == 0) and (s[i+1] == ' '):
+                liststr.append(s[x:i+1])
+                i+=1
+                while(s[i] == ' '):
+                    i+=1
+                    f=1
+                x=i
+                ost = len
+
+        elif (ost == 0) and (i<(lenstr(s)-2)) and (s[i] == ' '):
             liststr.append(s[x:i])
             x = i+1
+            i_space = 0
             ost = len
-        elif (i == (lenstr(s)-1)):
+
+        elif (ost == 0) and (i == (lenstr(s)-2)):
             liststr.append(s[x:i+1])
+            x = i+1
+            liststr.append(s[i+1])
+
+
+
+        elif (ost !=0 ) and (i == (lenstr(s)-2)):
+            liststr.append(s[x:i+2])
+
+
         ost -=1
+        if f==0:
+
+            i+=1
+
+
 
     nomer_str = None
     for i in range (lenstr(liststr)):
@@ -50,7 +78,7 @@ def WordSearch(len,s, subs):
                 x1 = t + 1
 
             if (t == lenstr(temp_str)-1):
-                srez = temp_str[x1:t + 1]
+                srez = temp_str[x1:t+1]
                 if (srez == subs):
 
                     nomer_str = i
@@ -73,4 +101,4 @@ def lenstr(s):
     return lens
 
 
-
+# end
