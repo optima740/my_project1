@@ -6,6 +6,7 @@ def Unmanned(L, N, track):
         return L
 
 
+
     i = 0
     j=0
     vremya_v_puti = 0
@@ -19,6 +20,9 @@ def Unmanned(L, N, track):
     while True:
         if i == len(track):
             break
+        if track[i][0] > L:
+            i+=1
+            continue
         koord_svetofora = track[i][0]
         time_red = track[i][1]
         time_green = track[i][2]
@@ -27,9 +31,13 @@ def Unmanned(L, N, track):
         if i == 0:
             vremya_v_puti = koord_svetofora
             delta_svetofor = 0
+
         elif i!=0:
             delta_svetofor = koord_svetofora - pred_koord_svetofora
             vremya_v_puti = vremya_v_puti+delta_svetofor
+
+
+
 
         if time_red == 0:                                                                   # red not activ
             #vremya_v_puti = vremya_v_puti + delta_svetofor
@@ -69,6 +77,6 @@ def Unmanned(L, N, track):
 
 #L = 10
 #N = 2
-#track = [[0,4,1],[3,0,1],[5,0,2],[10,0,3]]
+#track = [[11,5,5],[15,2,2]]
 #d = Unmanned(L, N, track)
 #print(d)
