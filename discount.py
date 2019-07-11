@@ -14,15 +14,19 @@ def MaximumDiscount(N, price):
         return t
 
 
-def discount_without(price):                    # разбивает price на price_mod по 3 вещи
+def discount_without(price):                    # сортирует price по убыванию и разбивает price на price_mod по 3 вещи
+
+    price2 = sort_price(price)
+    price2.reverse()
+
     i = 0
     count = 0
-    min = price[i]
+    min = price2[i]
     tmp_mass = []
     price_mod = []
-    for i in range(len(price)):
+    for i in range(len(price2)):
         d = (i+1)%3
-        tmp_mass.append(price[i])
+        tmp_mass.append(price2[i])
         if d == 0:
 
             price_mod.append(tmp_mass)
@@ -54,37 +58,42 @@ def summ_discount(min_price):                           #суммарная ск
     return summ
 
 def discount_all(price):                                # ксидка для изачального price
-    i=0
-    price1 = []
-    for i in range(len(price)):
-        price1.append(price[i])
+
 
     free_element = len(price) // 3
-    i=0
+
+    price1 = sort_price(price)
+
     min_price = []
 
-    tmp =0
-    while True:
-        count = 0
-        for i in range(len(price1)):
-            if i < (len(price1)-1):
-                if price1[i+1] < price1[i]:
+    tmp = 0
 
-                    tmp = price1[i]
-                    price1[i] = price1[i+1]
-                    price1[i+1] = tmp
-                    count+=1
-        if count == 0:
-            break
     i=0
     for i in range(free_element):
         min_price.append(price1[i])
     #print('min in price', min_price)
     return min_price
 
-
+def sort_price(price):                                      # сортировка от мин к макс
+    i = 0
+    price1 = []
+    for i in range(len(price)):
+        price1.append(price[i])
+    i = 0
+    while True:
+        count = 0
+        for i in range(len(price1)):
+            if i < (len(price1) - 1):
+                if price1[i + 1] < price1[i]:
+                    tmp = price1[i]
+                    price1[i] = price1[i + 1]
+                    price1[i + 1] = tmp
+                    count += 1
+        if count == 0:
+            break
+    return price1
 
 #N = 7
-#price = [2,2,2,1,1,1,3,3,3]
+#price = [100,150,200,250,300,350,400]
 #d = MaximumDiscount(N, price)
 #print('otvet',d)
