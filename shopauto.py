@@ -1,10 +1,10 @@
 def ShopOLAP(N, items):
     i=0
     j=0
-    if len(items)<=1 :
-        return None
-    if len(items)== 2:
+    if len(items)== 1:
         return items
+    if len(items) == 0 or N ==0:
+        return None
     tmp_list = []
     for i in range(len(items)):
 
@@ -47,19 +47,10 @@ def ShopOLAP(N, items):
 
         if len(tmp_list)==0:
             break
-
-
-    print(rez_list)
-
-
-
-
-
+    #print(rez_list)
     sort(rez_list)
-    print(rez_list)
-
+    #print(rez_list)
     i = 0
-
     L = len(rez_list)
     rez_list1 = []
     while True:
@@ -73,8 +64,8 @@ def ShopOLAP(N, items):
 
         i += 2
 
-
-    print(rez_list1)
+    #print(rez_list1)
+    return rez_list1
 
 def sort(rez_list):
 
@@ -93,10 +84,34 @@ def sort(rez_list):
             i+=2
         if flg == 0:
             break
+
+   # print(rez_list)
+    tmp_list = []
+    while True:
+        i = 1
+
+        while i <= (len(rez_list)-2):
+            if int(rez_list[i]) == int(rez_list[i+2]):
+
+                tmp_list.append(rez_list[i-1])
+                tmp_list.append(rez_list[i+1])
+                tmp_list.sort()
+                #print(tmp_list)
+
+                #tmp = rez_list[i+2]
+                #tmp1 = rez_list[i+1]
+                #rez_list[i+2] = rez_list[i]
+                rez_list[i+1] = tmp_list[1]
+                #rez_list[i] = tmp
+                rez_list[i-1] = tmp_list[0]
+
+            i+=2
+        if flg1 == 0:
+            break
     return rez_list
 
 
-items = ['платье1 5','сумка32 2','платье1 1','сумка23 2','сумка128 4']
-N = 5
-d = ShopOLAP(N, items)
-print(d)
+#items = ["dress1 5", "handbug32 2", "dress1 1", "handbug23 2", "handbug128 4"]
+#N = 4
+#d = ShopOLAP(N, items)
+#print(d)
