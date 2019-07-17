@@ -85,29 +85,33 @@ def sort(rez_list):
         if flg == 0:
             break
 
-   # print(rez_list)
-    tmp_list = []
-    while True:
-        i = 1
+    print(rez_list)
 
+
+
+    while True:
+        flg1 = 0
+        i = 1
         while i <= (len(rez_list)-2):
             if int(rez_list[i]) == int(rez_list[i+2]):
-
+                tmp_list = []
+                a0 =  rez_list[i-1]
+                a1 = rez_list[i+1]
                 tmp_list.append(rez_list[i-1])
                 tmp_list.append(rez_list[i+1])
-                tmp_list.sort()
-                #print(tmp_list)
 
-                #tmp = rez_list[i+2]
-                #tmp1 = rez_list[i+1]
-                #rez_list[i+2] = rez_list[i]
-                rez_list[i+1] = tmp_list[1]
-                #rez_list[i] = tmp
-                rez_list[i-1] = tmp_list[0]
+                tmp_list.sort()
+                if tmp_list[0] != a0 or tmp_list[1]!=a1:
+
+                    rez_list[i+1] = tmp_list[1]
+
+                    rez_list[i-1] = tmp_list[0]
+                    flg1=1
 
             i+=2
         if flg1 == 0:
             break
+
     return rez_list
 
 
