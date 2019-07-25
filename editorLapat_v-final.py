@@ -60,7 +60,7 @@ def BastShoe(command):
     if p == 1:
         rez = add(s)
         if undo_flg[0] == 1:
-            a = memory_list[carent_i[0]-1]
+            a = memory_list[carent_i[0]]
             del memory_list[:]
             memory_list.append(a)
             memory_list.append(rez)
@@ -132,8 +132,10 @@ def add(s):
             return out_str
         else:
             out_str = ''.join(memory_list[carent_i[0]]+s)
+            if undo_flg[0]==0:
+                carent_i[0] = len(memory_list)
 
-            carent_i[0] = len(memory_list)
+
 
             return out_str
 
@@ -211,7 +213,30 @@ def redo():
         #carent_i[0] = next_i[0]
     return rez_redo
 
+"""command = '1 Privet'
+d = BastShoe(command)
+command = '1 , Mir!'
+d = BastShoe(command)
+command = '1 ++'
+d = BastShoe(command)
+print(memory_list)
+print("carent_i:", carent_i[0])
+print("flg=", undo_flg)
+command = '4'
+d = BastShoe(command)
+print(memory_list)
+print("carent_i:", carent_i[0])
+print("flg=", undo_flg)
 
+command = '1 AAA'
+d = BastShoe(command)
+
+command = '4'
+d = BastShoe(command)
+
+
+
+print(d)"""
 
 
 
