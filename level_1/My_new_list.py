@@ -1,3 +1,4 @@
+
 class Node:
 
     def __init__(self, v):
@@ -34,13 +35,23 @@ class LinkedList:
                 pass
             else:
                 node = self.head
+                prev = None
                 while node != None:
 
                     if node.value == val:
-                        tmp = node.next
-                        #del(self.head)
-                        node = tmp
+                        if prev != None:
+
+                            tmp = node.next
+                            del(node)
+                            prev.next = tmp
+                            node = tmp
+                        else:
+                            tmp = node.next
+                            del (node)
+                            self.head = tmp
+                            node = tmp
                     else:
+                        prev = node
                         node = node.next
         else:
             return
@@ -65,8 +76,7 @@ class LinkedList:
     def find_all(self, val):
         return [] # здесь будет ваш код
 
-    def delete(self, val, all=False):
-        pass # здесь будет ваш код
+
 
     def clean(self):
         pass # здесь будет ваш код
@@ -94,5 +104,6 @@ my_list.add_in_tail(Node(102))
 my_list.add_in_head(Node(99))
 my_list.print_all_nodes()
 print(my_list.len())
-my_list.delete(101, False)
+my_list.delete(102, False)
+my_list.print_all_nodes()
 print(my_list.len())
