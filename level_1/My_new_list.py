@@ -28,31 +28,30 @@ class LinkedList:
             self.head = item
             self.head.next = tmp
 
-    def delete(self, val, all=False):
+    def delete(self, val, all):
 
         if self.len() != 0:
-            if (all):
-                pass
-            else:
-                node = self.head
-                prev = None
-                while node != None:
-
-                    if node.value == val:
-                        if prev != None:
-
-                            tmp = node.next
-                            del(node)
-                            prev.next = tmp
-                            node = tmp
-                        else:
-                            tmp = node.next
-                            del (node)
-                            self.head = tmp
-                            node = tmp
+            node = self.head
+            prev = None
+            while node != None:
+                if node.value == val:
+                    if prev != None:
+                        tmp = node.next
+                        del(node)
+                        prev.next = tmp
+                        node = tmp
+                        if tmp == None:
+                            self.tail = prev
                     else:
-                        prev = node
-                        node = node.next
+                        tmp = node.next
+                        del(node)
+                        self.head = tmp
+                        node = tmp
+                    if (all == False):
+                        return
+                else:
+                    prev = node
+                    node = node.next
         else:
             return
 
@@ -74,12 +73,31 @@ class LinkedList:
         return None
 
     def find_all(self, val):
-        return [] # здесь будет ваш код
+        list_out = []
+        node = self.head
+        while node is not None:
+            if node.value == val:
+                list_out.append(node)
+            node = node.next
+        return list_out
+
 
 
 
     def clean(self):
-        pass # здесь будет ваш код
+        if self.len()!=0:
+            node = self.head
+            while node != None:
+                tmp = node.next
+                del(node)
+                self.head = tmp
+                node = self.head
+            #self.head = None
+            if self.len()==0:
+                self.tail = None
+                return
+        else:
+            return
 
     def len(self):
         if self.head is None:
@@ -93,17 +111,47 @@ class LinkedList:
             return count
 
     def insert(self, afterNode, newNode):
-        pass # здесь будет ваш код
 
+        if self.len() == 0 or self.head == None or afterNode==None:
+            self.add_in_head(newNode)
+            return
+        if afterNode != None:
+            node = afterNode
+            tmp = node.next
+            if tmp!=None:
+                node.next = newNode
+                newNode.next = tmp
+            else:
+                node.next = newNode
+                self.tail = newNode
+                newNode.next = None
+
+
+
+
+"""
 my_list = LinkedList()
 
 
 my_list.add_in_head(Node(100))
 my_list.add_in_tail(Node(101))
 my_list.add_in_tail(Node(102))
-my_list.add_in_head(Node(99))
+my_list.add_in_tail(Node(103))
 my_list.print_all_nodes()
 print(my_list.len())
-my_list.delete(102, False)
+my_list.delete(103, True)
 my_list.print_all_nodes()
 print(my_list.len())
+my_list.add_in_tail(Node(10333))
+#p = my_list.find_all(100)
+#print(p)
+findNode = my_list.find(103)
+my_list.insert(findNode, Node(1111))
+my_list.print_all_nodes()
+print(my_list.len())
+my_list.clean()
+my_list.add_in_tail(Node(12345))
+my_list.print_all_nodes()
+print(my_list.len())
+
+"""
