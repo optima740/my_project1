@@ -28,7 +28,7 @@ class LinkedList:
             self.head = item
             self.head.next = tmp
 
-    def delete(self, val, all):
+    def delete(self, val, all=False):
 
         if self.len() != 0:
             node = self.head
@@ -133,15 +133,17 @@ class LinkedList:
 my_list = LinkedList()
 
 
-my_list.add_in_head(Node(100))
-my_list.add_in_tail(Node(101))
-my_list.add_in_tail(Node(102))
+my_list.add_in_head(Node(98))
+my_list.add_in_tail(Node(99))
+my_list.add_in_tail(Node(100))
 my_list.add_in_tail(Node(103))
 my_list.print_all_nodes()
 print(my_list.len())
-my_list.delete(103, True)
+#my_list.clean()
+my_list.delete(98)
 my_list.print_all_nodes()
 print(my_list.len())
+
 my_list.add_in_tail(Node(10333))
 #p = my_list.find_all(100)
 #print(p)
