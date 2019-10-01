@@ -1,4 +1,3 @@
-
 class Node:
 
     def __init__(self, v):
@@ -47,6 +46,8 @@ class LinkedList:
                         del(node)
                         self.head = tmp
                         node = tmp
+                        if tmp == None:
+                            self.tail = tmp
                     if (all == False):
                         return
                 else:
@@ -131,19 +132,33 @@ class LinkedList:
 
 """
 my_list = LinkedList()
-
-
 my_list.add_in_head(Node(98))
+my_list.add_in_head(Node(97))
+my_list.add_in_head(Node(96))
+my_list.add_in_head(Node(96))
+my_list.add_in_head(Node(96))
+my_list.print_all_nodes()
+print(my_list.len())
+p = my_list.find_all(96)
+print(p)
+
+my_list.delete(98)
+my_list.print_all_nodes()
+print(my_list.len())
+findNode = my_list.find(97)
+my_list.insert(findNode, Node(1111))
+my_list.delete(1111)
+my_list.print_all_nodes()
+print(my_list.len())
+
 my_list.add_in_tail(Node(99))
 my_list.add_in_tail(Node(100))
 my_list.add_in_tail(Node(103))
 my_list.print_all_nodes()
 print(my_list.len())
 #my_list.clean()
-my_list.delete(98)
 my_list.print_all_nodes()
 print(my_list.len())
-
 my_list.add_in_tail(Node(10333))
 #p = my_list.find_all(100)
 #print(p)
@@ -155,5 +170,4 @@ my_list.clean()
 my_list.add_in_tail(Node(12345))
 my_list.print_all_nodes()
 print(my_list.len())
-
 """
