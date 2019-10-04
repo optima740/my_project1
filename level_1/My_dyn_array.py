@@ -35,7 +35,7 @@ class DynArray:
     def insert(self, i, itm):
         if self.__len__()!=0:
             if i > self.count or i < 0:
-                raise IndexError('insert: Index is out of bounds')
+                raise IndexError('Index is out of bounds')
             elif i == self.count:
                 self.append(itm)
 
@@ -55,13 +55,14 @@ class DynArray:
                     j+=1
                 self.count +=1
         else:
+            raise IndexError('Index is out of bounds')
             return
 
 
     def delete(self, i):
         if self.__len__()!=0:
             if i >= self.count or i < 0:
-                raise IndexError('delete: Index is out of bounds')
+                raise IndexError('Index is out of bounds')
             elif i == (self.count-1):
                 tmp_loc = self.make_array(self.count-1)
                 for k in range(0, i):
@@ -85,6 +86,7 @@ class DynArray:
                     self.resize(int(self.capacity/1.5))
                 return
         else:
+            raise IndexError('Index is out of bounds')
             return
 
 """
