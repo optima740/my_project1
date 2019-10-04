@@ -63,6 +63,7 @@ class DynArray:
 
 
     def delete(self, i):
+        capacity_to_del= int(self.capacity/1.5)
         if self.__len__()!=0:
             if i >= self.count or i < 0:
                 raise IndexError('Index is out of bounds')
@@ -77,8 +78,12 @@ class DynArray:
                 self.array = tmp_loc
                 self.count -=1
                 if self.count < (0.5 * self.capacity) and self.capacity>16:
-                    self.resize(int(self.capacity/1.5))
-                return
+                    if capacity_to_del > 16:
+                        self.resize(capacity_to_del)
+                        return
+                    else:
+                        self.resize(16)
+
             else:
                 tmp_loc = self.make_array(self.count-1)
 
@@ -90,29 +95,35 @@ class DynArray:
                 self.array = tmp_loc
                 self.count -=1
                 if self.count < (0.5 * self.capacity) and self.capacity>16:
-                    self.resize(int(self.capacity/1.5))
+                    if capacity_to_del > 16:
+                        self.resize(capacity_to_del)
+                        return
+                    else:
+                        self.resize(16)
                 return
         else:
 
             raise IndexError('Index is out of bounds')
             return
 
-"""
+
 da = DynArray()
-for i in range(16):
+for i in range(17):
     da.append(i)
     #print(da[i])
 print('count:', da.count)
 print('capacity:', da.capacity)
 print('delete')
-#da.insert(31,99)
-for i in range(15,-1,-1):
-    da.delete(i)
+#da.insert(17,99)
 
-#da.delete(0)
+da.delete(0)
+da.delete(0)
+
 print('count:', da.count)
 print('capacity:', da.capacity)
-
+"""
+for i in range(15,-1,-1):
+    da.delete(i)
 
 for i in range(15,-1,-1):
     da.delete(i)
