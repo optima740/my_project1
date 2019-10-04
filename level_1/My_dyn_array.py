@@ -17,6 +17,7 @@ class DynArray:
     def __getitem__(self, i):
         if i < 0 or i >= self.count:
             raise IndexError('Index is out of bounds')
+
         return self.array[i]
 
     def resize(self, new_capacity):
@@ -66,12 +67,15 @@ class DynArray:
             if i >= self.count or i < 0:
                 raise IndexError('Index is out of bounds')
             elif i == (self.count-1):
+                if i == 0 and self.count == 1:
+                    self.count = 0
+                    return
                 tmp_loc = self.make_array(self.count-1)
                 for k in range(0, i):
                     tmp_loc[k] = self.array[k]
                 self.array = tmp_loc
                 self.count -=1
-                if self.count < (0.5 * self.capacity):
+                if self.count < (0.5 * self.capacity) and self.capacity>16:
                     self.resize(int(self.capacity/1.5))
                 return
             else:
@@ -84,7 +88,7 @@ class DynArray:
                         j+=1
                 self.array = tmp_loc
                 self.count -=1
-                if self.count < (0.5 * self.capacity):
+                if self.count < (0.5 * self.capacity) and self.capacity>16:
                     self.resize(int(self.capacity/1.5))
                 return
         else:
@@ -94,10 +98,19 @@ class DynArray:
 
 """
 da = DynArray()
-for i in range(16):
+for i in range(32):
     da.append(i)
     #print(da[i])
 print('count:', da.count)
+print('capacity:', da.capacity)
+print('delete')
+da.insert(31,99)
+da.delete(31)
+da.delete(30)
+print('count:', da.count)
+print('capacity:', da.capacity)
+
+
 da.insert(12,99)
 print('count:', da.count)
 print('capacity:', da.capacity)
