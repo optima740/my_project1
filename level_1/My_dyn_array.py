@@ -54,6 +54,8 @@ class DynArray:
                     self.array[k] = tmp_loc[j]
                     j+=1
                 self.count +=1
+        elif self.__len__()==0 and i == 0:
+            self.append(itm)
         else:
             raise IndexError('Index is out of bounds')
             return
@@ -86,6 +88,7 @@ class DynArray:
                     self.resize(int(self.capacity/1.5))
                 return
         else:
+
             raise IndexError('Index is out of bounds')
             return
 
