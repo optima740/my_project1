@@ -69,6 +69,7 @@ class DynArray:
             elif i == (self.count-1):
                 if i == 0 and self.count == 1:
                     self.count = 0
+                    self.array = self.make_array(self.capacity)
                     return
                 tmp_loc = self.make_array(self.count-1)
                 for k in range(0, i):
@@ -98,19 +99,23 @@ class DynArray:
 
 """
 da = DynArray()
-for i in range(32):
+for i in range(16):
     da.append(i)
     #print(da[i])
 print('count:', da.count)
 print('capacity:', da.capacity)
 print('delete')
-da.insert(31,99)
-da.delete(31)
-da.delete(30)
+#da.insert(31,99)
+for i in range(15,-1,-1):
+    da.delete(i)
+
+#da.delete(0)
 print('count:', da.count)
 print('capacity:', da.capacity)
 
 
+for i in range(15,-1,-1):
+    da.delete(i)
 da.insert(12,99)
 print('count:', da.count)
 print('capacity:', da.capacity)
