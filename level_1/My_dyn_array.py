@@ -106,7 +106,7 @@ class DynArray:
             raise IndexError('Index is out of bounds')
             return
 
-
+"""
 da = DynArray()
 for i in range(17):
     da.append(i)
@@ -118,10 +118,21 @@ print('delete')
 
 da.delete(0)
 da.delete(0)
-
+da.delete(0)
+da.delete(0)
+da.delete(0)
+da.delete(0)
+da.delete(0)
+da.insert(0,99)
+da.insert(0,99)
+da.insert(0,99)
+da.insert(0,99)
+da.insert(0,99)
+da.insert(0,99)
+da.insert(0,99)
 print('count:', da.count)
 print('capacity:', da.capacity)
-"""
+
 for i in range(15,-1,-1):
     da.delete(i)
 
