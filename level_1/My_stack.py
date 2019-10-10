@@ -24,29 +24,22 @@ class Stack:
             return None  # если стек пустой
 
 def skobki(string):
-    st1 = Stack()
-    count_open = 0
-    count_close = 0
+    if string[0] == ')' or string[len(string) - 1] == '(':
+        return False
     if len(string) != 0:
-        for i in range(len(string)-1,-1,-1):
-            st1.push(string[i])
-        if st1.peek() == ')':
-            return False
-        else:
-            st1.pop()
-            count_open += 1
-            while st1.size() > 0:
-                itm = st1.pop()
-                if itm == '(':
-                    count_open += 1
-                elif itm == ')':
-                    count_close += 1
-                if st1.size()==0 and itm == '(':
+        st1 = Stack()
+        for i in range(len(string)):
+            if string[i] == '(':
+                st1.push(string[i])
+            elif string[i] == ')':
+                if st1.size() > 0:
+                    st1.pop()
+                else:
                     return False
-            if count_open == count_close:
-                return True
-            else:
-                return False
+        if st1.size() == 0:
+            return True
+        else:
+            return False
     else:
         return
 
@@ -73,5 +66,5 @@ def StackToStack(string):
         return
 
 
-
-
+string = '())()'
+print(skobki(string))
