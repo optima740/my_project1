@@ -66,5 +66,4 @@ def StackToStack(string):
         return
 
 
-string = '())()'
-print(skobki(string))
+

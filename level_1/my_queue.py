@@ -1,4 +1,5 @@
-import Stack
+import My_stack as ms
+
 class Queue:
     def __init__(self):
         self.queue = []
@@ -9,7 +10,7 @@ class Queue:
 
     def dequeue(self):
         if self.size() > 0:
-            self.queue.pop(0)
+            return self.queue.pop(0)
         else:
             return
 
@@ -35,22 +36,36 @@ class Queue:
             return
 
     def print_all(self):
-        for i in range(self.size()):
-            print(self.queue[i])
+        if self.size() != 0:
+            for i in range(self.size()):
+                print(self.queue[i])
+        else:
+            return
 
 class QueueStack:
     def __init__(self):
-        self.st1 =
+        self.st1 = ms.Stack()
+        self.st2 = ms.Stack()
 
-qe = Queue()
+    def enqueue(self, item):
+        self.st1.push(item)
 
-n = 9
+    def dequeue(self):
+        while self.st1.size() > 0:
+            self.st2.push(self.st1.pop())
+        return self.st2.pop()
 
-for i in range(1,9):
-    qe.enqueue(i)
+    def print_all(self):
+        if self.st1.size() !=0:
+            while self.st1.size() > 0:
+                tmp = self.st1.pop()
+                self.st2.push(tmp)
+            while self.st2.size() > 0:
+                print(self.st2.pop())
+        elif self.st2 != 0:
+            while self.st2.size() > 0:
+                print(self.st2.pop())
+        else:
+            return
 
-qe.rotate(n)
 
-qe.print_all()
-
-print('stop')
