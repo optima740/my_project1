@@ -17,24 +17,6 @@ class Queue:
     def size(self):
         return len(self.queue)
 
-    def rotate(self, N):
-        if self.size() > N:
-            tmp = self.queue[0:(self.size() - N)]
-            k = self.size() - N
-            i = 0
-            while k < self.size():
-                self.queue[i] = self.queue[k]
-                i+=1
-                k+=1
-            k = N
-            i = 0
-            while k < self.size():
-                self.queue[k] = tmp[i]
-                k+=1
-                i+=1
-        else:
-            return
-
     def print_all(self):
         if self.size() != 0:
             for i in range(self.size()):
@@ -67,5 +49,17 @@ class QueueStack:
                 print(self.st2.pop())
         else:
             return
+
+def rotateQueue(struct, N):
+    if struct.size() > N:
+        tmp = Queue()
+        while struct.size() > N:
+            tmp.enqueue(struct.dequeue())
+        while tmp.size() > 0:
+            struct.enqueue(tmp.dequeue())
+    else:
+        return
+
+
 
 
