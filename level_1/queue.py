@@ -8,7 +8,7 @@ class Queue:
 
     def dequeue(self):
         if self.size() > 0:
-            self.queue.pop(0)
+            return self.queue.pop(0)
         else:
             return
 
@@ -39,3 +39,10 @@ class Queue:
                 print(self.queue[i])
         else:
             return
+
+
+qu = Queue()
+
+qu.enqueue(1)
+print(qu.dequeue())
+
