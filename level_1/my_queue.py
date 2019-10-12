@@ -52,14 +52,19 @@ class QueueStack:
 
 def rotateQueue(struct, N):
     if struct.size() > N:
-        tmp = Queue()
-        while struct.size() > N:
-            tmp.enqueue(struct.dequeue())
-        while tmp.size() > 0:
-            struct.enqueue(tmp.dequeue())
+        for i in range(struct.size()-N):
+            struct.enqueue(struct.dequeue())
     else:
         return
 
 
+q = Queue()
 
+N = 2
+size = 8
+
+for i in range(1, size+1):
+    q.enqueue(i)
+rotateQueue(q, N)
+q.print_all()
 
