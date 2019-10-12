@@ -51,16 +51,14 @@ class QueueStack:
             return
 
 def rotateQueue(struct, N):
-    if struct.size() > N:
-        for i in range(struct.size()-N):
-            struct.enqueue(struct.dequeue())
-    else:
-        return
+    for i in range(N):
+        struct.enqueue(struct.dequeue())
+
 
 
 q = Queue()
 
-N = 2
+N = 5
 size = 8
 
 for i in range(1, size+1):
