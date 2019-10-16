@@ -181,26 +181,26 @@ class OrderedStringList(OrderedList):
             else:
                 return -1
         elif len(str1) == 0 and len(str2) > 0:
-            return 1
+            return -1
         elif len(str1) == 0 and len(str2) == 0:
             return 0
         elif len(str1) > 0 and len(str2) == 0:
-            return -1
+            return 1
         # -1 если v1 < v2
         # 0 если v1 == v2
         # +1 если v1 > v2
 
 
 """
-ol = OrderedStringList(False)
+ol = OrderedStringList(True)
 ol.add('aaa')
-ol.add(' zzz')
+ol.add(' ')
 ol.add('aab')
 ol.add('abc')
 
 
 
-ol.delete(' zzz')
+#ol.delete(' zzz')
 ol.print_all_nodes()
 
 """
