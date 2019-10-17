@@ -181,11 +181,11 @@ class OrderedStringList(OrderedList):
             else:
                 return -1
         elif len(str1) == 0 and len(str2) > 0:
-            return -1
+            return 1
         elif len(str1) == 0 and len(str2) == 0:
             return 0
         elif len(str1) > 0 and len(str2) == 0:
-            return 1
+            return -1
         # -1 если v1 < v2
         # 0 если v1 == v2
         # +1 если v1 > v2
@@ -197,13 +197,14 @@ ol.add('aaa')
 ol.add(' ')
 ol.add('aab')
 ol.add('abc')
+ol.add('      ')
 
 
 
-#ol.delete(' zzz')
+ol.delete('abc')
 ol.print_all_nodes()
-
 """
+
 
 
 
