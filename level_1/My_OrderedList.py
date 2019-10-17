@@ -175,17 +175,17 @@ class OrderedStringList(OrderedList):
 
         if len(str1) > 0 and len(str2) > 0:
             if str1 < str2:
-                return 1
+                return -1
             elif str1 == str2:
                 return 0
             else:
-                return -1
+                return 1
         elif len(str1) == 0 and len(str2) > 0:
-            return 1
+            return -1
         elif len(str1) == 0 and len(str2) == 0:
             return 0
         elif len(str1) > 0 and len(str2) == 0:
-            return -1
+            return 1
         # -1 если v1 < v2
         # 0 если v1 == v2
         # +1 если v1 > v2
