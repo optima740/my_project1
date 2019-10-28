@@ -2,9 +2,9 @@
 # или расширьте его методами из HashTable
 class HashTable:
     def __init__(self, sz, stp):
-        self.size = sz
+        self.size_n = sz
         self.step = stp
-        self.slots = [None] * self.size
+        self.slots = [None] * self.size_n
 
     def str_to_int(self, value):
         value = str(value).strip()
@@ -14,17 +14,17 @@ class HashTable:
         return sum
 
     def hash_fun(self, value):
-        return self.str_to_int(value) % self.size
+        return self.str_to_int(value) % self.size_n
         # в качестве value поступают строки!
         # всегда возвращает корректный индекс слота
     def seek_slot(self, value):
         count = 0
         index = self.hash_fun(value)
-        while count <= self.size - 1:
+        while count <= self.size_n - 1:
             if self.slots[index] == None:
                 return index
-            if index + self.step > self.size-1:
-                index = (index+self.step) - (self.size)
+            if index + self.step > self.size_n-1:
+                index = (index+self.step) - (self.size_n)
             else:
                 index += self.step
             count += 1
@@ -49,11 +49,11 @@ class HashTable:
         value = str(value).strip()
         find_index = self.hash_fun(value)
         count = 0
-        while count <= self.size-1:
+        while count <= self.size_n-1:
             if self.slots[find_index] == value:
                 return find_index
-            if find_index + self.step > self.size-1:
-                find_index = (find_index+self.step) - (self.size)
+            if find_index + self.step > self.size_n-1:
+                find_index = (find_index+self.step) - (self.size_n)
             else:
                 find_index += self.step
             count += 1
@@ -67,16 +67,17 @@ class PowerSet(HashTable):
         self.util_index = []
         self.size_count = 0
     def size(self):
-        return self.size_count
+        size = self.size_count
+        return size
         # количество элементов в множестве
     def seek_slot(self, value):
         count = 0
         index = self.hash_fun(value)
-        while count <= self.size - 1:
+        while count <= self.size_n - 1:
             if self.slots[index] == None or self.slots[index] == value:
                 return index
-            if index + self.step > self.size-1:
-                index = (index+self.step) - (self.size)
+            if index + self.step > self.size_n-1:
+                index = (index+self.step) - (self.size_n)
             else:
                 index += self.step
             count += 1
@@ -160,3 +161,25 @@ class PowerSet(HashTable):
         # возвращает True, если set2 есть
         # подмножество текущего множества,
         # иначе False
+"""
+set1 = PowerSet()
+set2 = PowerSet()
+set1.put('aaa')
+set1.put('123')
+set1.put('azz')
+set1.put('ab___m')
+set1.put('789')
+set1.put('888')
+set1.put('qwert')
+set1.put('azzyuio')
+
+
+set2.put('aaa')
+set2.put('azz')
+set2.put('azzyuio')
+set2.put('ab___m')
+set2.put('789')
+
+set1.issubset(set2)
+set1.size()
+"""
