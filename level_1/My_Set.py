@@ -67,8 +67,8 @@ class PowerSet(HashTable):
         self.util_index = []
         self.size_count = 0
     def size(self):
-        size = self.size_count
-        return size
+
+        return self.size_count
         # количество элементов в множестве
     def seek_slot(self, value):
         count = 0
@@ -76,6 +76,7 @@ class PowerSet(HashTable):
         while count <= self.size_n - 1:
             if self.slots[index] == None or self.slots[index] == value:
                 return index
+
             if index + self.step > self.size_n-1:
                 index = (index+self.step) - (self.size_n)
             else:
@@ -100,22 +101,38 @@ class PowerSet(HashTable):
 
     def get(self, value):
         value = str(value).strip()
-        if self.slots[self.seek_slot(value)] == value:
+        index_get = self.seek_for_del(value)
+        if index_get != None and self.slots[index_get] == value:
             return True
         else:
+
             return False
         # возвращает True если value имеется в множестве,
         # иначе False
-
+    def seek_for_del(self, value):
+        count = 0
+        index = self.hash_fun(value)
+        while count <= self.size_n - 1:
+            if  self.slots[index] == value:
+                return index
+            if index + self.step > self.size_n - 1:
+                index = (index + self.step) - (self.size_n)
+            else:
+                index += self.step
+            count += 1
+        return None
 
     def remove(self, value):
         value = str(value).strip()
-        index_remove = self.seek_slot(value)
-        if self.slots[index_remove] == value:
-            self.slots[index_remove] = None
-            self.size_count -= 1
-            self.util_index.remove(index_remove)
-            return True
+        if self.get(value):
+            index_remove = self.seek_for_del(value)
+            if index_remove!= None and self.slots[index_remove] == value:
+                self.slots[index_remove] = None
+                self.size_count -= 1
+                self.util_index.remove(index_remove)
+                return True
+            else:
+                return False
         else:
             return False
         # возвращает True если value удалено
@@ -135,12 +152,10 @@ class PowerSet(HashTable):
         set3 = PowerSet()
         for i in self.util_index:
             value = self.slots[i]
-            if set2.get(value) == False:
-                set3.put(value)
+            set3.put(value)
         for i in set2.util_index:
             value = set2.slots[i]
-            if self.get(value) == False:
-                set3.put(value)
+            set3.put(value)
         return set3
 
     def difference(self, set2):
@@ -164,14 +179,22 @@ class PowerSet(HashTable):
 """
 set1 = PowerSet()
 set2 = PowerSet()
-set1.put('aaa')
-set1.put('123')
-set1.put('azz')
-set1.put('ab___m')
+
 set1.put('789')
 set1.put('888')
-set1.put('qwert')
-set1.put('azzyuio')
+set1.put('987')
+set1.put('879')
+
+
+set1.remove('789')
+
+set1.remove('888')
+set1.remove('987')
+set1.remove('879')
+set1.remove('8791234')
+
+
+print("ok")
 
 
 set2.put('aaa')
@@ -181,5 +204,5 @@ set2.put('ab___m')
 set2.put('789')
 
 set1.issubset(set2)
-set1.size()
+print(set1.size())
 """
