@@ -26,19 +26,9 @@ class NativeCache:
             self.slots.pop(key2del)
             self.slots[value] = 1
 
-    def get_item(self, value):
+    
 
 
-c = NativeCache(1000)
-for i in range(100000):
-    c.add_item(i)
-#print(c.slots.keys())
-#print(c.slots.values())
-#print('len slots:', c.len_slots)
-
-#print(c.slots.keys())
-#print(c.slots.values())
-print('ok')
 
 
 
