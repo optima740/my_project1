@@ -5,6 +5,7 @@ class NativeCache:
         self.values = [None] * self.size
         self.hits = [0] * self.size
         self.len_table = 0
+
     def str_to_code(self, key):
         key = str(key).strip()
         sum = 0
@@ -61,7 +62,6 @@ class NativeCache:
             index = self.hash_fun(key)
             if self.slots[index] == key:
                 return self.values[index]
-
             while self.slots[index] != key:
                 if index + 1 <= self.size-1:
                     index += 1
@@ -70,8 +70,7 @@ class NativeCache:
             return self.values[index]
         else:
             return
-         # возвращает value для key,
-         # или None если ключ не найден
+
     def index_for_key(self, key):
         index_key = self.slots.index(key)
         if index_key != None:
@@ -79,9 +78,6 @@ class NativeCache:
         else:
             return
 
-    def min_value(self):
-        min_item = min(self.values)
-        return min_item
     def remove_item(self, index):
         self.slots[index] = None
         self.values[index] = None
@@ -91,7 +87,6 @@ class NativeCache:
     def add_to_cache(self, key, value):
         if self.len_table < self.size and self.is_key(key) == False:   #если кэш не заполнен до конца и ключа еще нет в кэше
             self.put(key, value)
-
             self.len_table += 1
             return
         elif self.len_table == self.size and self.is_key(key) == False:  #если кэш заполнен и ключа еще нет в кэше
@@ -102,19 +97,20 @@ class NativeCache:
             self.len_table += 1
             return
         self.put(key, value)       #если ключ уже существует
-    def get_from_cache(self,key):
+
+    def get_from_cache(self, key):
         if self.is_key(key):
-            self.hits[self.index_for_key(key)] +=1
+            self.hits[self.index_for_key(key)] += 1
             return self.get(key)
         else:
             return
+
 import unittest
 
 class My_tests(unittest.TestCase):
 
     def test_add(self):
         c = NativeCache(10)
-
         for i in range(10):
             c.add_to_cache(i, 'vol' + str(i))
         self.assertEqual(c.len_table, 10, 'incorrect len_table')
@@ -140,9 +136,6 @@ class My_tests(unittest.TestCase):
         c.add_to_cache('888', 18)
         c.add_to_cache('999', 19)
         c.add_to_cache('000', 20)
-        print('slots:{}'.format(c.slots))
-        print('values:{}'.format(c.values))
-        print('hits:{}'.format(c.hits))
 
     def test_get(self):
         c = NativeCache(10)
@@ -192,51 +185,6 @@ class My_tests(unittest.TestCase):
         print('hits:{}'.format(c.hits))
 
 test = My_tests()
-#test.test_add()
+test.test_add()
 test.test_get()
 
-"""
-c.get_from_cache(2)
-c.get_from_cache(2)
-c.get_from_cache(0)
-c.get_from_cache(0)
-c.get_from_cache(1)
-c.add_to_cache(9999, 88888)
-c.add_to_cache(1, 890)
-
-
-c.add_to_cache('zxcv')
-c.add_to_cache('453')
-c.add_to_cache('123')
-c.add_to_cache('op')
-c.add_to_cache('rfvtyhj')
-c.add_to_cache('9876554')
-c.add_to_cache('0')
-c.add_to_cache('qmdpr8')
-
-c.add_to_cache('123')
-c.add_to_cache('123')
-c.add_to_cache('123')
-c.add_to_cache('0')
-
-c.add_to_cache('AAAAAAA')
-
-print('slots:{}'.format(c.slots))
-print('values:{}'.format(c.values))
-print('hits:{}'.format(c.hits))
-
-print('len:', c.len_table)
-    c.add_to_cache('321', 110)
-    c.add_to_cache('432', 111)
-   c.add_to_cache('432', 111)
-        c.add_to_cache('543', 112)
-        c.add_to_cache('654', 113)
-        c.add_to_cache('765', 114)
-        c.add_to_cache('876', 115)
-        c.add_to_cache('987', 116)
-        c.add_to_cache('098', 117)
-        c.add_to_cache('109', 118)
-        c.add_to_cache('210', 119)
-
-
-"""
