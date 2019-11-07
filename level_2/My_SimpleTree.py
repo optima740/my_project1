@@ -45,7 +45,8 @@ class SimpleTree:
         if self.Root == None:
             return []
         elif len(self.Root.Children) == 0:
-            return list_all_nodes.append(self.Root)
+            list_all_nodes.append(self.Root)
+            return list_all_nodes
         else:
             def find(struct):
                 list_all_nodes.append(struct)
