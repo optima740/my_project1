@@ -43,7 +43,7 @@ class SimpleTree:
     def GetAllNodes(self):
         list_all_nodes = []
         if self.Root == None:
-            return
+            return []
         elif len(self.Root.Children) == 0:
             return list_all_nodes.append(self.Root)
         else:
@@ -58,7 +58,7 @@ class SimpleTree:
 
     def FindNodesByValue(self, val):
         if self.Root == None:
-            return
+            return []
         else:
             list_find_nodes = []
             def find(struct, val):
@@ -72,7 +72,7 @@ class SimpleTree:
                     list_find_nodes.append(struct)
                     return list_find_nodes
                 else:
-                    return
+                    return []
             find(self.Root, val)
             return list_find_nodes
         # ваш код поиска узлов по значению
