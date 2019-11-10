@@ -103,7 +103,7 @@ class BST:
 
             elif del_node.Node.RightChild != None or del_node.Node.LeftChild != None: # если в удаляемом узле есть один потомок
                 if del_node.Node.Parent.LeftChild == del_node.Node:
-                    
+                    pass
 
 
         # удаляем узел по ключу
