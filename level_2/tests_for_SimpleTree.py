@@ -36,7 +36,7 @@ class My_Tests(unittest.TestCase):
         node6 = tr.SimpleTreeNode('1.2.1.1', None)
 
         My_tree = tr.SimpleTree(node1)
-        self.assertEqual(My_tree.Count(), 1, 'incorrect count root')
+        self.assertEqual(My_tree.Count, 1, 'incorrect count root')
         My_tree.AddChild(node1, node2)
         My_tree.AddChild(node1, node3)
         My_tree.AddChild(node3, node4)
