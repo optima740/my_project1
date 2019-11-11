@@ -46,6 +46,7 @@ class BST:
                 else:
                     itemFind.NodeHasKey = True
                     itemFind.Node = node
+
                     return itemFind
                 return itemFind
             return find(self.Root, key)
@@ -85,51 +86,101 @@ class BST:
         # ищем максимальное/минимальное (узел) в поддереве
         return None
 
-    def DeleteNodeByKey(self, key):
+    def DeleteNodeByKey(self, key): # удаляем узел по ключу если узел не найден
+
         if self.Root == None:
             return False
         else:
-            del_node = self.FindNodeByKey(key)
-            if del_node == False:
-                return False
-            elif del_node.Node.RightChild == None and del_node.Node.LeftChild == None: # если в удаляемом узле нет потомков
-                if del_node.Node.Parent.LeftChild == del_node.Node:
-                    del_node.Node.Parent.LeftChild = None
-                    del_node.Node.Parent = None
-
+            def remove_leaf(del_node):  # функция удаления листа
+                if del_node.Parent.LeftChild == del_node:
+                    del_node.Parent.LeftChild = None
+                    del_node.Parent = None
                 else:
-                    del_node.Node.Parent.RightChild = None
-                    del_node.Node.Parent = None
+                    del_node.Parent.RightChild = None
+                    del_node.Parent = None
 
-            elif del_node.Node.RightChild != None or del_node.Node.LeftChild != None: # если в удаляемом узле есть один потомок
-                if del_node.Node.Parent.LeftChild == del_node.Node:
-                    pass
+            def remove_node_with_right_child(del_node): # функция удаления узла с одним правым потомком
+                if del_node.Parent.LeftChild == del_node:
+                    del_node.Parent.LeftChild = del_node.RightChild
+                else:
+                    del_node.Parent.RightChild = del_node.RightChild
+                del_node.RightChild.Parent = del_node.Parent
+                del_node.Parent = None
+                del_node.RightChild = None
 
+            def remove_node_with_left_child(del_node): # функция удаления узла с одним левым потомком
+                if del_node.Parent.LeftChild == del_node:
+                    del_node.Parent.LeftChild = del_node.LeftChild
+                else:
+                    del_node.Parent.RightChild = del_node.LeftChild
+                del_node.LeftChild.Parent = del_node.Parent
+                del_node.Parent = None
+                del_node.LeftChild = None
 
-        # удаляем узел по ключу
-        return False  # если узел не найден
+            find_remove = self.FindNodeByKey(key)
+            del_node = find_remove.Node
+            if find_remove.NodeHasKey == False:
+                return False
 
-    def Count(self):
+            elif del_node.Parent == None: # если удаляемый узел - корень
+                self.Root = None
+
+            elif del_node.RightChild == None and del_node.LeftChild == None:
+                # если в удаляемом узле нет потомков
+
+                remove_leaf(del_node)
+            elif (del_node.RightChild != None and del_node.LeftChild == None):
+                # если в удаляемом узле есть один правый потомок
+
+                remove_node_with_right_child(del_node)
+            elif (del_node.RightChild == None and del_node.LeftChild != None):
+                # если в удаляемом узле есть один левый потомок
+
+                remove_node_with_left_child(del_node)
+            elif (del_node.RightChild != None and del_node.LeftChild != None):
+                # если в удаляемом узле есть оба потомка
+                node = del_node.RightChild
+                while True:
+                    if (node.LeftChild == None and node.RightChild != None):
+                        remove_node_with_right_child(node)
+                        del_node.NodeKey = node.NodeKey
+                        del_node.NodeValue = node.NodeValue
+                        break
+                    elif (node.LeftChild != None and node.RightChild == None):
+                        remove_node_with_left_child(node)
+                        del_node.NodeKey = node.NodeKey
+                        del_node.NodeValue = node.NodeValue
+                        break
+                    elif (node.LeftChild == None and node.RightChild == None):
+                        remove_leaf(node)
+                        del_node.NodeKey = node.NodeKey
+                        del_node.NodeValue = node.NodeValue
+                        break
+                    node = node.LeftChild
+
+    def Count1(self):
+        list_count = []
         if self.Root == None:
             return 0
         else:
-            list_count = []
-            def find(count, node):
-                count.append(1)
+
+            def find(node):
+                list_count.append(1)
                 if node.RightChild != None and node.LeftChild != None:
                     child = []
                     child.append(node.LeftChild)
                     child.append(node.RightChild)
                     for i in child:
-                        find(count, i)
+                        find(i)
                 elif node.RightChild != None and node.LeftChild == None:
-                    find(count, node.RightChild)
+                    find(node.RightChild)
                 elif node.RightChild == None and node.LeftChild != None:
-                    find(count, node.LeftChild)
+                    find(node.LeftChild)
                 elif node.RightChild == None and node.LeftChild == None:
-                    return count
-                return count
-            return len(find(list_count, self.Root))
+                    return list_count
+                return list_count
+            size = len(find(self.Root))
+            return size
 
           # количество узлов в дереве
 
@@ -141,10 +192,22 @@ My_BTS.AddKeyValue(94, 940)
 My_BTS.AddKeyValue(73, 730)
 My_BTS.AddKeyValue(14, 140)
 My_BTS.AddKeyValue(23, 230)
-print(My_BTS.Count())
-findNode = My_BTS.FindNodeByKey(70)
-print(findNode.NodeHasKey)
-print('ok')
+print("size: ", My_BTS.Count1())
+node_find = My_BTS.FindNodeByKey(93)
+parent = node_find.Node.Parent
+print('pointer from parent: ', node_find.Node.Parent.RightChild)
+print('pointer on parent: ', node_find.Node.Parent)
+print('pointer on child: ', node_find.Node.RightChild)
+My_BTS.DeleteNodeByKey(93)
+print('deleting')
+print("size: ", My_BTS.Count1())
+print('pointer from parent: ', parent.RightChild)
+print('pointer on parent: ', node_find.Node.Parent)
+print('pointer on child: ', node_find.Node.RightChild)
+print('key', node_find.Node.NodeKey)
+print('key', node_find.Node.NodeValue)
+
+
 """
 My_BTS.AddKeyValue(93, 930)
 My_BTS.AddKeyValue(31, 310)
