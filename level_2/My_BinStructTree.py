@@ -57,6 +57,8 @@ class BST:
         if self.Root == None:
             newNode = BSTNode(key, val, None)
             self.Root = newNode
+        elif self.FindNodeByKey(key).NodeHasKey == True:
+            return False
         else:
             def add(node, key):
                 if node.NodeKey < key and node.RightChild != None:
@@ -77,9 +79,11 @@ class BST:
                     return
                 else:
                     return False
+
             return add(self.Root, key)
+
         # добавляем ключ-значение в дерево
-        return False  # если ключ уже есть
+          # false если ключ уже есть
 
     def FinMinMax(self, FromNode, FindMax=False):
         if self.Root == None or FromNode == None:
@@ -192,9 +196,13 @@ class BST:
             return size
 
           # количество узлов в дереве
-"""
+
 My_BTS = BST()
 My_BTS.AddKeyValue(70, 700)
+My_BTS.AddKeyValue(93, 930)
+My_BTS.AddKeyValue(93, 930)
+print()
+"""
 My_BTS.AddKeyValue(93, 930)
 My_BTS.AddKeyValue(31, 310)
 My_BTS.AddKeyValue(94, 940)
