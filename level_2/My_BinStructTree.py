@@ -63,20 +63,20 @@ class BST:
             def add(node, key):
                 if node.NodeKey < key and node.RightChild != None:
                     node = node.RightChild
-                    add(node, key)
+                    return add(node, key)
                 elif node.NodeKey < key and node.RightChild == None:
                     newNode = BSTNode(key, val, node)
                     node.RightChild = newNode
                     newNode.Parent = node
-                    return
+                    return True
                 elif node.NodeKey > key and node.LeftChild != None:
                     node = node.LeftChild
-                    add(node, key)
+                    return add(node, key)
                 elif node.NodeKey > key and node.LeftChild == None:
                     newNode = BSTNode(key, val, node)
                     node.LeftChild = newNode
                     newNode.Parent = node
-                    return
+                    return True
                 else:
                     return False
 
@@ -114,7 +114,7 @@ class BST:
                 else:
                     del_node.Parent.RightChild = None
                     del_node.Parent = None
-
+                return True
             def remove_node_with_right_child(del_node): # функция удаления узла с одним правым потомком
                 if del_node.Parent.LeftChild == del_node:
                     del_node.Parent.LeftChild = del_node.RightChild
@@ -123,7 +123,7 @@ class BST:
                 del_node.RightChild.Parent = del_node.Parent
                 del_node.Parent = None
                 del_node.RightChild = None
-
+                return True
             def remove_node_with_left_child(del_node): # функция удаления узла с одним левым потомком
                 if del_node.Parent.LeftChild == del_node:
                     del_node.Parent.LeftChild = del_node.LeftChild
@@ -132,7 +132,7 @@ class BST:
                 del_node.LeftChild.Parent = del_node.Parent
                 del_node.Parent = None
                 del_node.LeftChild = None
-
+                return True
             find_remove = self.FindNodeByKey(key)
             del_node = find_remove.Node
             if find_remove.NodeHasKey == False:
@@ -140,19 +140,20 @@ class BST:
 
             elif del_node.Parent == None: # если удаляемый узел - корень
                 self.Root = None
+                return True
 
             elif del_node.RightChild == None and del_node.LeftChild == None:
                 # если в удаляемом узле нет потомков
 
-                remove_leaf(del_node)
+                return remove_leaf(del_node)
             elif (del_node.RightChild != None and del_node.LeftChild == None):
                 # если в удаляемом узле есть один правый потомок
 
-                remove_node_with_right_child(del_node)
+                return remove_node_with_right_child(del_node)
             elif (del_node.RightChild == None and del_node.LeftChild != None):
                 # если в удаляемом узле есть один левый потомок
 
-                remove_node_with_left_child(del_node)
+                return remove_node_with_left_child(del_node)
             elif (del_node.RightChild != None and del_node.LeftChild != None):
                 # если в удаляемом узле есть оба потомка
                 node = del_node.RightChild
@@ -160,14 +161,14 @@ class BST:
                     if (node.LeftChild == None and node.RightChild != None): # нашли узел только с правым потомком. Потомка перемещаем на место удаляемого
                         del_node.NodeKey = node.NodeKey
                         del_node.NodeValue = node.NodeValue
-                        remove_node_with_right_child(node)
-                        break
+                        return remove_node_with_right_child(node)
+                        #break
 
                     elif (node.LeftChild == None and node.RightChild == None):  # нашли лист. Его помещаем на место удаляемого узла.
                         del_node.NodeKey = node.NodeKey
                         del_node.NodeValue = node.NodeValue
-                        remove_leaf(node)
-                        break
+                        return remove_leaf(node)
+                        #break
 
                     node = node.LeftChild
 
