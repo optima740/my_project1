@@ -154,9 +154,9 @@ class BST:
                 node = del_node.RightChild
                 while True:
                     if (node.LeftChild == None and node.RightChild != None): # нашли узел только с правым потомком. Потомка перемещаем на место удаляемого
-                        del_node.NodeKey = node.RightChild.NodeKey
-                        del_node.NodeValue = node.RightChild.NodeValue
-                        remove_leaf(node.RightChild)
+                        del_node.NodeKey = node.NodeKey
+                        del_node.NodeValue = node.NodeValue
+                        remove_node_with_right_child(node)
                         break
 
                     elif (node.LeftChild == None and node.RightChild == None):  # нашли лист. Его помещаем на место удаляемого узла.
