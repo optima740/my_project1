@@ -20,7 +20,6 @@ class BST:
 
     def __init__(self, node=None):
         self.Root = node  # корень дерева, или None
-
         self.levels = 0
 
     def FindNodeByKey(self, key):
@@ -58,7 +57,6 @@ class BST:
             newNode = BSTNode(key, val, None)
             self.Root = newNode
             newNode.from_level = 1
-
             return True
         elif search_result.NodeHasKey == True:
             return False
@@ -68,14 +66,12 @@ class BST:
                 search_result.Node.LeftChild = newNode
                 newNode.Parent = search_result.Node
                 newNode.from_level = self.Count_Parent(newNode)
-
                 return True
             else:
                 newNode = BSTNode(key, val, search_result.Node)
                 search_result.Node.RightChild = newNode
                 newNode.Parent = search_result.Node
                 newNode.from_level = self.Count_Parent(newNode)
-
                 return True
         # добавляем ключ-значение в дерево
           # false если ключ уже есть
@@ -128,22 +124,17 @@ class BST:
             del_node = find_remove.Node
             if find_remove.NodeHasKey == False:
                 return False
-
             elif del_node.Parent == None: # если удаляемый узел - корень
                 self.Root = None
                 return True
-
             elif del_node.RightChild == None and del_node.LeftChild == None:
                 # если в удаляемом узле нет потомков
-
                 return remove_leaf(del_node)
             elif (del_node.RightChild != None and del_node.LeftChild == None):
                 # если в удаляемом узле есть один правый потомок
-
                 return remove_node_with_right_child(del_node)
             elif (del_node.RightChild == None and del_node.LeftChild != None):
                 # если в удаляемом узле есть один левый потомок
-
                 return remove_node_with_left_child(del_node)
             elif (del_node.RightChild != None and del_node.LeftChild != None):
                 # если в удаляемом узле есть оба потомка
@@ -153,15 +144,12 @@ class BST:
                         del_node.NodeKey = node.NodeKey
                         del_node.NodeValue = node.NodeValue
                         return remove_node_with_right_child(node)
-
-
                     elif (node.LeftChild == None and node.RightChild == None):  # нашли лист. Его помещаем на место удаляемого узла.
                         del_node.NodeKey = node.NodeKey
                         del_node.NodeValue = node.NodeValue
                         return remove_leaf(node)
-
-
                     node = node.LeftChild
+
     def Count_Parent(self, node):
         count = 1
         while node.Parent != None:
@@ -213,43 +201,73 @@ class BST:
         if self.Root == None:
             return list_all
         else:
-            def bypass(node, list_all):
-                list_all.append(node)
-                if node.LeftChild != None:
-                    bypass(node.LeftChild, list_all)
-                if node.RightChild != None:
-                    bypass(node.RightChild, list_all)
-                else:
+            def bypass_0(node, list_all):
+                if node.LeftChild != None and node.RightChild != None:
+                    bypass_0(node.LeftChild, list_all)
+                    list_all.append(node)
+                    bypass_0(node.RightChild, list_all)
                     return list_all
+                elif node.LeftChild == None and node.RightChild != None:
+                    list_all.append(node)
+                    bypass_0(node.RightChild, list_all)
+                    return list_all
+                elif node.LeftChild != None and node.RightChild == None:
+                    bypass_0(node.LeftChild, list_all)
+                    return list_all
+                else:
+                    list_all.append(node)
+                    return list_all
+
+            def bypass_1(node, list_all):
+                if node.LeftChild != None and node.RightChild != None:
+                    bypass_1(node.LeftChild, list_all)
+                    bypass_1(node.RightChild, list_all)
+                    list_all.append(node)
+                    return list_all
+                elif node.LeftChild == None and node.RightChild != None:
+                    bypass_1(node.RightChild, list_all)
+                    list_all.append(node)
+                    return list_all
+                elif node.LeftChild != None and node.RightChild == None:
+                    bypass_1(node.LeftChild, list_all)
+                    list_all.append(node)
+                    return list_all
+                else:
+                    list_all.append(node)
+                    return list_all
+            def bypass_2(node, list_all):
+                if node.LeftChild != None and node.RightChild != None:
+                    list_all.append(node)
+                    bypass_2(node.LeftChild, list_all)
+                    bypass_2(node.RightChild, list_all)
+                    return list_all
+                elif node.LeftChild == None and node.RightChild != None:
+                    list_all.append(node)
+                    bypass_2(node.RightChild, list_all)
+                    return list_all
+                elif node.LeftChild != None and node.RightChild == None:
+                    list_all.append(node)
+                    bypass_2(node.LeftChild, list_all)
+                    return list_all
+                else:
+                    list_all.append(node)
+                    return list_all
+
             if option_bypass == 0:
-                if self.Root.LeftChild != None:
-                    bypass(self.Root.LeftChild, list_all)
-                list_all.append(self.Root)
-                if self.Root.RightChild != None:
-                    bypass(self.Root.RightChild, list_all)
+                bypass_0(self.Root, list_all)
                 return list_all
             elif option_bypass == 1:
-                if self.Root.LeftChild != None:
-                    bypass(self.Root.LeftChild, list_all)
-                if self.Root.RightChild != None:
-                    bypass(self.Root.RightChild, list_all)
-                list_all.append(self.Root)
+                bypass_1(self.Root, list_all)
                 return list_all
             elif option_bypass == 2:
-                list_all.append(self.Root)
-                if self.Root.LeftChild != None:
-                    bypass(self.Root.LeftChild, list_all)
-                if self.Root.RightChild != None:
-                    bypass(self.Root.RightChild, list_all)
+                bypass_2(self.Root, list_all)
                 return list_all
-
-My_BTS = BST()
 """
-My_BTS.AddKeyValue(70, 7)
+My_BTS = BST()
 
+My_BTS.AddKeyValue(70, 7)
 My_BTS.AddKeyValue(31, 3)
 My_BTS.AddKeyValue(80, 8)
-
 My_BTS.AddKeyValue(22, 2)
 My_BTS.AddKeyValue(37, 3)
 My_BTS.AddKeyValue(73, 7)
@@ -264,12 +282,12 @@ My_BTS.AddKeyValue(26, 2)
 
 print('size:', My_BTS.Count())
 root = My_BTS.FindNodeByKey(70)
-"""
-deep = My_BTS.DeepAllNodes(2)
+
+deep = My_BTS.DeepAllNodes(1)
 wide = My_BTS.WideAllNodes()
-print(deep, wide)
-for i in wide:
+#print(deep, wide)
+for i in deep:
     print(i.NodeKey)
 
-
+"""
 
