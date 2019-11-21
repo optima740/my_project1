@@ -118,12 +118,12 @@ class BalancedBST:
 
                 elif node.RightChild != None and node.LeftChild == None:
                     deep[1] = node.RightChild.Level
-                    return
+                    return deep
                 elif node.RightChild == None and node.LeftChild != None:
                     deep[0] = node.LeftChild.Level
-                    return
+                    return deep
                 elif node.RightChild == None and node.LeftChild == None:
-                    return
+                    return deep
                 return deep
 
             result = find(root_node, deep)
@@ -149,9 +149,9 @@ class BalancedBST:
                     q.append(node.RightChild)
             return list_all
 
-"""        
-#a = [70, 10, 14, 15, 97, 71, 33, 32, 31, 35, 93, 73, 76, 94, 95]
-a = [70, 10, 14, 15, 71, 33, 32, 31, 35, 93, 73, 76, 94, 97, 95]
+"""
+a = [70, 10, 14, 15, 97, 71, 33, 32, 31, 35, 93, 73, 76, 94, 95]
+#a = [70, 10, 14, 15, 71, 33, 32, 31, 35, 93, 73, 76, 94, 97, 95]
 #a = [70,14,33,73,31,93,95]
 #a = [70,70,70,70,70,70,70]
 
@@ -160,9 +160,9 @@ my_tree.GenerateTree(a)
 all = my_tree.GetAllNodes()
 for i in all:
     print(i.NodeKey)
-print(my_tree.IsBalanced(my_tree.Root))
+print(my_tree.IsBalanced(my_tree.Root.RightChild.RightChild.RightChild))
 
 #print(my_tree.PrintAllNodes())
-"""
 
+"""
 
