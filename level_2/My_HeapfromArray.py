@@ -6,7 +6,7 @@ class Heap:
 
     def size_array(self, depth):
         n = 1
-        for i in range(1, depth):
+        for i in range(1, depth+1):
             n = (n * 2) + 1
         return n
 
@@ -64,13 +64,11 @@ class Heap:
 
 """
 my_heap = Heap()
-a = [6,9,4,7,3,1,8,2,5,11]
-my_heap.MakeHeap(a, 4)
+a = [6] #,9,4,7,3,1,8,2,5,11,10,13,15,14,12]
+my_heap.MakeHeap(a, 3)
 my_heap.GetAll()
-print('______________________________________-')
-my_heap.GetMax()
-my_heap.GetAll()
-print('______________________________________-')
-my_heap.GetMax()
-my_heap.GetAll()
+print('_______________________________________')
+print(len(my_heap.HeapArray))
+print(my_heap.HeapSize)
+
 """
