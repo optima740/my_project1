@@ -26,10 +26,29 @@ class Heap:
         if len(self.HeapArray) == 0:
             return -1 # если куча пуста
         else:
-            item_out = self.HeapArray.pop(0)
-            if len(self.HeapArray) > 1:
-                self.MoveMaxUp()
+            item_out = self.HeapArray[0]
+            if len(self.HeapArray) >= 2:
+                item_next = self.HeapArray.pop(len(self.HeapArray) - 1)
+                self.HeapArray[0] = item_next
+                index = 0
+                while True:
+                    if (2*index+1) <= (len(self.HeapArray)-1) and self.HeapArray[index] < self.HeapArray[2 * index + 1]:
+                        tmp = self.HeapArray[2 * index + 1]
+                        self.HeapArray[2 * index + 1] = self.HeapArray[index]
+                        self.HeapArray[index] = tmp
+                        index = 2 * index + 1
+                    elif (2*index+2) <= (len(self.HeapArray)-1) and self.HeapArray[index] < self.HeapArray[2 * index + 2]:
+                        tmp = self.HeapArray[2 * index + 2]
+                        self.HeapArray[2 * index + 2] = self.HeapArray[index]
+                        self.HeapArray[index] = tmp
+                        index = 2 * index + 2
+                    else:
+                        break
+            else:
+                item_out = self.HeapArray.pop(0)
+
             return item_out
+
 
     def MoveMaxUp(self):
         # перемещает новый элемент вверх до того, как найдет
@@ -59,16 +78,27 @@ class Heap:
         if len(self.HeapArray) == 0:
             return
         else:
+            i=0
             for item in self.HeapArray:
-                print(item)
+                print(i,':', item)
+                i += 1
 
 """
 my_heap = Heap()
-a = [6] #,9,4,7,3,1,8,2,5,11,10,13,15,14,12]
-my_heap.MakeHeap(a, 3)
+a = [6,9,4] #,7,3,1,8,2,5,11,10,13,15,14,12]
+my_heap.MakeHeap(a, 1)
 my_heap.GetAll()
 print('_______________________________________')
-print(len(my_heap.HeapArray))
-print(my_heap.HeapSize)
-
+print(my_heap.GetMax())
+print(my_heap.GetMax())
+print(my_heap.GetMax())
+print(my_heap.GetMax())
+my_heap.GetAll()
+print('_______________________________________')
+my_heap.Add(40)
+my_heap.Add(20)
+my_heap.Add(400)
+my_heap.GetAll()
 """
+
+
