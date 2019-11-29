@@ -82,10 +82,10 @@ class SimpleGraph:
             current_vertex = VFrom
             while True:
                 self.vertex[current_vertex].Hit = True
-                vertex_stack.append(current_vertex)
+                vertex_stack.append(self.vertex[current_vertex])
                 for j in range(len(self.m_adjacency)):
                     if self.m_adjacency[current_vertex][j] == 1 and j == VTo:
-                        vertex_stack.append(j)
+                        vertex_stack.append(self.vertex[j])
                         return vertex_stack
                 for j in range(len(self.m_adjacency)):
                     if self.m_adjacency[current_vertex][j] == 1 and self.vertex[j].Hit == False:
@@ -123,6 +123,6 @@ my_graph.PrintAllAdjacency()
 
 path = my_graph.DepthFirstSearch(0, 4)
 for item in path:
-    print(item, ' ', end='')
+    print(item.Value, ' ', end='')
 
 """
