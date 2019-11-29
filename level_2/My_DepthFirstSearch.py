@@ -75,8 +75,12 @@ class SimpleGraph:
         # узлы задаются позициями в списке vertex
         # возвращается список узлов -- путь из VFrom в VTo
         # или [] если пути нету
+        if VFrom >= len(self.vertex) or VTo >= len(self.vertex) or VFrom < 0 or VTo < 0:
+            return []
         if self.vertex[VFrom] == None or self.vertex[VTo] == None:
             return []
+        elif VFrom == VTo:
+            return [self.vertex[VFrom]]
         else:
             vertex_stack = []
             current_vertex = VFrom
@@ -119,10 +123,10 @@ my_graph.RemoveEdge(0, 3)
 
 my_graph.RemoveEdge(3, 1)
 
+
 my_graph.PrintAllAdjacency()
 
-path = my_graph.DepthFirstSearch(0, 4)
+path = my_graph.DepthFirstSearch(4, 3)
 for item in path:
     print(item.Value, ' ', end='')
-
 """
