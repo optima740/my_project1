@@ -83,7 +83,9 @@ class SimpleGraph:
             return [self.vertex[VFrom]]
         else:
             vertex_stack = []
+
             current_vertex = VFrom
+            count_iter = 0
             while True:
                 self.vertex[current_vertex].Hit = True
                 vertex_stack.append(self.vertex[current_vertex])
@@ -92,41 +94,62 @@ class SimpleGraph:
                         vertex_stack.append(self.vertex[j])
                         return vertex_stack
                 for j in range(len(self.m_adjacency)):
-                    if self.m_adjacency[current_vertex][j] == 1 and self.vertex[j].Hit == False:
+                    if self.m_adjacency[current_vertex][j] == 1 and j != VTo and self.vertex[j].Hit == False:
                         current_vertex = j
                         break
+                count_iter +=1
+                if count_iter > len(self.vertex):
+                    return []
+
+
 
 """
-my_graph = SimpleGraph(5)
+my_graph = SimpleGraph(9)
 my_graph.AddVertex('A')
 my_graph.AddVertex('B')
 my_graph.AddVertex('C')
 my_graph.AddVertex('D')
 my_graph.AddVertex('E')
+my_graph.AddVertex('F')
+my_graph.AddVertex('G')
+my_graph.AddVertex('H')
+my_graph.AddVertex('I')
 
 my_graph.AddEdge(0,1)
-my_graph.AddEdge(0,2)
 my_graph.AddEdge(0,3)
 my_graph.AddEdge(1,0)
-my_graph.AddEdge(1,3)
 my_graph.AddEdge(1,4)
-my_graph.AddEdge(2,0)
-my_graph.AddEdge(2,3)
-my_graph.AddEdge(3,3)
+my_graph.AddEdge(1,2)
+my_graph.AddEdge(2,1)
+my_graph.AddEdge(2,5)
 my_graph.AddEdge(3,0)
-my_graph.AddEdge(3,1)
-my_graph.AddEdge(3,2)
-my_graph.AddEdge(3,4)
-my_graph.AddEdge(4,3)
+my_graph.AddEdge(3,6)
 my_graph.AddEdge(4,1)
-my_graph.RemoveEdge(0, 3)
+my_graph.AddEdge(4,7)
+my_graph.AddEdge(5,2)
+my_graph.AddEdge(5,8)
+my_graph.AddEdge(6,3)
+my_graph.AddEdge(6,7)
+my_graph.AddEdge(7,4)
+my_graph.AddEdge(7,6)
+my_graph.AddEdge(7,8)
+my_graph.AddEdge(8,7)
+my_graph.AddEdge(8,5)
+my_graph.AddEdge(0,4)
+my_graph.AddEdge(4,8)
+my_graph.AddEdge(8,4)
+my_graph.AddEdge(4,0)
 
-my_graph.RemoveEdge(3, 1)
+
+
+#my_graph.RemoveEdge(0, 3)
+
+#my_graph.RemoveEdge(3, 1)
 
 
 my_graph.PrintAllAdjacency()
 
-path = my_graph.DepthFirstSearch(4, 3)
+path = my_graph.DepthFirstSearch(8, 8)
 for item in path:
     print(item.Value, ' ', end='')
 """
