@@ -152,11 +152,11 @@ class SimpleGraph:
                 else:
                     return []
                 count_iter += 1
-
-my_graph = SimpleGraph(2)
+"""
+my_graph = SimpleGraph(9)
 my_graph.AddVertex('A')
 my_graph.AddVertex('B')
-"""
+
 my_graph.AddVertex('C')
 my_graph.AddVertex('D')
 my_graph.AddVertex('E')
@@ -164,11 +164,11 @@ my_graph.AddVertex('F')
 my_graph.AddVertex('G')
 my_graph.AddVertex('H')
 my_graph.AddVertex('I')
-"""
+
 my_graph.AddEdge(0,1)
 #my_graph.AddEdge(0,3)
 my_graph.AddEdge(1,0)
-"""
+
 my_graph.AddEdge(1,4)
 my_graph.AddEdge(1,2)
 my_graph.AddEdge(2,1)
@@ -196,7 +196,7 @@ my_graph.AddEdge(4,0)
 #my_graph.RemoveEdge(0, 3)
 
 #my_graph.RemoveEdge(3, 1)
-"""
+
 
 my_graph.PrintAllAdjacency()
 
@@ -204,3 +204,4 @@ path = my_graph.BreadthFirstSearch(0,1)
 for item in path:
     print(item.Value, ' ', end='')
 #print(path)
+"""
