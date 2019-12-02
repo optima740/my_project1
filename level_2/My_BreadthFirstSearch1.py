@@ -112,46 +112,51 @@ class SimpleGraph:
         elif VFrom == VTo:
             return [self.vertex[VFrom]]
         else:
-            vertex_deque = []
             path_stack = []
-            count_iter = 0
-            current_vertext = VFrom
-            path_stack.append(current_vertext)
-            while count_iter <= len(self.m_adjacency):
-                self.vertex[current_vertext].Hit = True
-                for j in range(len(self.m_adjacency)):
-                    if self.m_adjacency[current_vertext][j] == 1 and j == VTo:
-                        path_stack.append(j)
-                        index = path_stack[len(path_stack)-1]
-                        result_path = []
-                        if len(path_stack) > 2:
-                            result_path.append(index)
-                            while index != 0:
-                                for k in range(len(self.m_adjacency)):
-                                    if self.m_adjacency[index][k] == 1 and path_stack.count(k) == 1:
-                                        result_path.append(k)
-                                        index = k
-                                        break
-                            result_path.reverse()
-                        else:
-                            result_path = path_stack
-                        for i in range(len(result_path)):
-                            result_path[i] = self.vertex[result_path[i]]
-                        return result_path
+            front_propagation = self.Propagation(VFrom, VTo)
+            if len(front_propagation) > 0:
+                back_propagation = self.Propagation(front_propagation[len(front_propagation)-1], front_propagation[0])
+                for i in range(len(front_propagation)):
+                    if back_propagation.count(front_propagation[i]) == 0:
+                        front_propagation[i] = None
+                for item in front_propagation:
+                    if item != None:
+                        path_stack.append(self.vertex[item])
+                return path_stack
+            else:
+                return front_propagation
 
-                for j in range(len(self.m_adjacency)):
-                    if self.m_adjacency[current_vertext][j] == 1 and j != VTo and self.vertex[j].Hit == False:
-                        if len(vertex_deque) > 0:
-                            if vertex_deque.count(j) == 0:
-                                vertex_deque.append(j)
-                        else:
-                            vertex_deque.append(j)
-                if len(vertex_deque) != 0:
-                    current_vertext = vertex_deque.pop(0)
-                    path_stack.append(current_vertext)
-                else:
-                    return []
-                count_iter += 1
+    def Propagation(self, VFrom, VTo):
+        vertex_dequeA = []
+        vertex_dequeB = []
+
+        count_iter = 0
+        current_vertext = VFrom
+        #path_stack.append(current_vertext)
+        for item in self.vertex:
+            if item != None:
+                item.Hit = False
+        while count_iter <= len(self.m_adjacency):
+            self.vertex[current_vertext].Hit = True
+            for j in range(len(self.m_adjacency)):
+
+                if self.m_adjacency[current_vertext][j] == 1 and j == VTo:
+                    vertex_dequeA.append(current_vertext)
+                    vertex_dequeA.append(j)
+                    return vertex_dequeA
+
+                elif self.m_adjacency[current_vertext][j] == 1 and j != VTo and self.vertex[j].Hit == False:
+                    if len(vertex_dequeB) > 0:
+                        if vertex_dequeB.count(j) == 0:
+                            vertex_dequeB.append(j)
+                    else:
+                        vertex_dequeB.append(j)
+            vertex_dequeA.append(current_vertext)
+            if len(vertex_dequeB) > 0:
+                current_vertext = vertex_dequeB.pop(0)
+
+            count_iter += 1
+
 """
 my_graph = SimpleGraph(9)
 my_graph.AddVertex('A')
@@ -166,7 +171,8 @@ my_graph.AddVertex('H')
 my_graph.AddVertex('I')
 
 my_graph.AddEdge(0,1)
-#my_graph.AddEdge(0,3)
+my_graph.AddEdge(0,3)
+my_graph.AddEdge(0,3)
 my_graph.AddEdge(1,0)
 
 my_graph.AddEdge(1,4)
@@ -198,6 +204,11 @@ my_graph.AddEdge(4,0)
 #my_graph.RemoveEdge(3, 1)
 
 
+my_graph = SimpleGraph(9)
+my_graph.AddVertex('A')
+my_graph.AddVertex('B')
+my_graph.AddEdge(0,1)
+my_graph.AddEdge(1,0)
 my_graph.PrintAllAdjacency()
 
 path = my_graph.BreadthFirstSearch(0,1)
