@@ -124,17 +124,21 @@ class SimpleGraph:
                         path_stack.append(j)
                         index = path_stack[len(path_stack)-1]
                         result_path = []
-                        result_path.append(index)
-                        while index != 0:
-                            for k in range(len(self.m_adjacency)):
-                                if self.m_adjacency[index][k] == 1 and path_stack.count(k) == 1:
-                                    result_path.append(k)
-                                    index = k
-                                    break
-                        result_path.reverse()
+                        if len(path_stack) > 2:
+                            result_path.append(index)
+                            while index != 0:
+                                for k in range(len(self.m_adjacency)):
+                                    if self.m_adjacency[index][k] == 1 and path_stack.count(k) == 1:
+                                        result_path.append(k)
+                                        index = k
+                                        break
+                            result_path.reverse()
+                        else:
+                            result_path = path_stack
                         for i in range(len(result_path)):
                             result_path[i] = self.vertex[result_path[i]]
                         return result_path
+
                 for j in range(len(self.m_adjacency)):
                     if self.m_adjacency[current_vertext][j] == 1 and j != VTo and self.vertex[j].Hit == False:
                         if len(vertex_deque) > 0:
@@ -148,10 +152,11 @@ class SimpleGraph:
                 else:
                     return []
                 count_iter += 1
-"""
-my_graph = SimpleGraph(9)
+
+my_graph = SimpleGraph(2)
 my_graph.AddVertex('A')
 my_graph.AddVertex('B')
+"""
 my_graph.AddVertex('C')
 my_graph.AddVertex('D')
 my_graph.AddVertex('E')
@@ -159,10 +164,11 @@ my_graph.AddVertex('F')
 my_graph.AddVertex('G')
 my_graph.AddVertex('H')
 my_graph.AddVertex('I')
-
+"""
 my_graph.AddEdge(0,1)
-my_graph.AddEdge(0,3)
+#my_graph.AddEdge(0,3)
 my_graph.AddEdge(1,0)
+"""
 my_graph.AddEdge(1,4)
 my_graph.AddEdge(1,2)
 my_graph.AddEdge(2,1)
@@ -190,7 +196,7 @@ my_graph.AddEdge(4,0)
 #my_graph.RemoveEdge(0, 3)
 
 #my_graph.RemoveEdge(3, 1)
-
+"""
 
 my_graph.PrintAllAdjacency()
 
@@ -198,4 +204,3 @@ path = my_graph.BreadthFirstSearch(0,1)
 for item in path:
     print(item.Value, ' ', end='')
 #print(path)
-"""
