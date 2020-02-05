@@ -12,7 +12,7 @@ class My_Abstract_Stack(ABC):
     CONST_PUSH_ERR = 2  # стек заполнен
 
     def __init__(self):
-        My_Abstract_Stack() # постусловие: создан пустой стек
+        pass  # постусловие: создан пустой стек
 
     # команды
 
