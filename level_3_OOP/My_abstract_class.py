@@ -12,22 +12,28 @@ class My_Abstract_Stack(ABC):
     CONST_PUSH_ERR = 2  # стек заполнен
 
     def __init__(self):
-        My_Abstract_Stack()
+        My_Abstract_Stack() # постусловие: создан пустой стек
 
     # команды
+
+    # предусловие: стек не заполнен полностью
+    # постусловие: добавлен новый элемент
     @abstractmethod
     def push(self):
         pass
 
+    # предусловие: стек не пустой
+    # постусловие: удален верхий элемент
     @abstractmethod
     def pop(self):
         pass
-
+    # из стека удалены все значения, стек пуст
     @abstractmethod
     def clear(self):
         pass
 
     # запросы
+    #предусловие: стек не пустой
     @abstractmethod
     def peek(self):
         pass
