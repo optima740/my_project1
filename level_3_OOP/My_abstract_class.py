@@ -68,7 +68,8 @@ class BoundedStack(My_Abstract_Stack):
             return result
 
     def clear(self):
-        self.__My__stack = [] * self.__max_size
+
+        self.__stack = [] * self.__max_size
         self.__peek_status = self.CONST_PEEK_NIL
         self.__pop_status = self.CONST_POP_NIL
         self.__push_status = self.CONST_PUSH_NIL
@@ -98,20 +99,3 @@ class BoundedStack(My_Abstract_Stack):
     def get_push_status(self):
         return self.__push_status
 
-
-st = BoundedStack(7)
-st.push(100)
-st.push(101)
-st.push(102)
-st.push(103)
-st.push(104)
-st.push(105)
-st.push(106)
-st.push(107)
-st.push(108)
-st.clear()
-st.push(123)
-st.peek()
-st.pop()
-
-print('push {}, peek {}, pop {}'.format(st.get_push_status(), st.get_peek_status(), st.get_pop_status()))
