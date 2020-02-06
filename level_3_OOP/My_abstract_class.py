@@ -1,6 +1,6 @@
-from abc import*
+from abc import ABC, abstractmethod
 
-class My_Abstract_Stack(ABC):
+class BoundedStack(ABC):
     CONST_POP_NIL = 0   # pop() еще не вызывался
     CONST_POP_OK = 1    # последняя pop() отработала нормально
     CONST_POP_ERR = 2   # стек пуст
@@ -55,7 +55,16 @@ class My_Abstract_Stack(ABC):
     def get_push_status(self):
         pass
 
-class BoundedStack(My_Abstract_Stack):
+class BoundedStack:
+    CONST_POP_NIL = 0  # pop() еще не вызывался
+    CONST_POP_OK = 1  # последняя pop() отработала нормально
+    CONST_POP_ERR = 2  # стек пуст
+    CONST_PEEK_NIL = 0  # peek() еще не вызывался
+    CONST_PEEK_OK = 1  # последняя peek() вернула корректное значение
+    CONST_PEEK_ERR = 2  # стек пуст
+    CONST_PUSH_NIL = 0  # push() еше не вызывался
+    CONST_PUSH_OK = 1  # последняя push() вернула корректное значение
+    CONST_PUSH_ERR = 2  # стек заполнен
 
     def __init__(self, n=32):
         self.__max_size = n
