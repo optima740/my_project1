@@ -40,8 +40,9 @@ class ParentList(ABC):
     CONST_REMOVE_ALL_NIL = 0    # remove_all() еще не вызывался
     CONST_REMOVE_ALL_OK = 1     # все узлы с заданным значением удалены из списка
     CONST_REMOVE_ALL_ERR = 2    # в списке нет ни одного узла с заданным значением или список пуст
-    CONST_ADD_TAIL_NIL = 0
-    CONST_ADD_TAIL_OK =1
+    CONST_ADD_TAIL_NIL = 0      # add_tail() еще не вызывался
+    CONST_ADD_TAIL_OK =1        # элемент добавлен в хвост
+
     # СТАТУСЫ ЗАПРОСОВ:
     CONST_IS_HEAD_NIL = 0   # is_head() еще не вызывался
     CONST_IS_HEAD_OK = 1    # курсор в начале списка (True) или нет (False)
@@ -112,7 +113,6 @@ class ParentList(ABC):
         else:
             self.__head_status = self.CONST_POINTER_HEAD_ERR
 
-
     # предусловие: список не пуст
     # постусловие: курсор указывает на последний узел
     def tail(self):
@@ -122,7 +122,6 @@ class ParentList(ABC):
             self.__tail_status = self.CONST_POINTER_TAIL_OK
         else:
             self.__tail_status = self.CONST_POINTER_TAIL_ERR
-
 
     # предусловие: список не пуст, праве курсора есть элемент
     # постусловие: курсор передвинулся вправо
@@ -142,8 +141,6 @@ class ParentList(ABC):
         # сдвинуть курсор на один узел влево
        pass
 
-
-
     # предусловие: список не пуст
     # постусловие: новый элемент присутствует справа
     def put_right(self, value):
@@ -160,8 +157,6 @@ class ParentList(ABC):
                 return
         self.add_tail(value)
         self.__put_right_status = self.CONST_PUT_RIGHT_OK
-
-
 
     # предусловие: список не пуст
     # постусловие: новый элемент присутствует слева
@@ -264,7 +259,6 @@ class ParentList(ABC):
             return
         self.__replace_status = self.CONST_REPLACE_ERR
 
-
     # предусловие: список не пуст
     # постусловие: курсор переставлен по указанному значению
     def find(self, value):
@@ -350,8 +344,6 @@ class ParentList(ABC):
             self.value_status = True
         self.__is_value_status = self.CONST_IS_VALUE_OK
 
-
-
     # предусловие: список не пуст
     def get(self):
         # получить значение текущего узла
@@ -359,7 +351,6 @@ class ParentList(ABC):
             self.__get_status = self.CONST_GET_OK
             return self.pointer.value
         self.__get_status = self.CONST_GET_ERR
-
 
     def size(self):
         # посчитать количество узлов в списке
@@ -371,11 +362,12 @@ class ParentList(ABC):
                 node = node.next
         return counter_node
 
+
 class LinkedList(ParentList):
     pass
 
-class TwoWayList(ParentList):
 
+class TwoWayList(ParentList):
 
     # предусловие: список не пуст, левее курсора есть элемент
     # постусловие: курсор передвинулся влево
@@ -389,9 +381,7 @@ class TwoWayList(ParentList):
         self.__left_status = self.CONST_POINTER_LEFT_ERR
 
     def get_left(self):
+
         return self.__left_status
 
-my_struct = TwoWayList()
 
-my_struct.add_tail(100)
-my_struct.add_tail(200)
