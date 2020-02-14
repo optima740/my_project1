@@ -208,12 +208,12 @@ class My_DynArray:
 
 
     def delete(self, index):
-        if self.len_array() > 0 and index > 0 and not index < self.count:
+        if self.len_array() > 0 and index > 0:
             capacity_to_del = int(self.capacity / 1.5)
             if index == (self.count - 1):
                 if index > 0 and self.count > 1:
                     tmp_loc = self.make_array(self.count - 1)
-                    for k in range(0, i):
+                    for k in range(0, index):
                         tmp_loc[k] = self.array[k]
                     self.array = tmp_loc
                     self.count -= 1
