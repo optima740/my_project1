@@ -152,11 +152,53 @@ class SimpleGraph:
                 else:
                     return []
                 count_iter += 1
+
+    def WeakVertices(self):
+        # возвращает список узлов вне треугольников
+        result_list_node = []
+        count_iter = 0
+
+        def list_adjacency(FromVertext):
+            dequeA = []
+            if self.vertex[FromVertext] != None:
+                for j in range(len(self.m_adjacency)):
+                    if self.m_adjacency[current_vertext][j] == 1:
+                        dequeA.append(j)
+            return dequeA
+
+        for index in range(len(self.vertex)):
+            if self.vertex[index] != None:
+                current_vertext = index
+                list_n_of_vertext = list_adjacency(current_vertext)
+                if len(list_n_of_vertext) == 1 or len(list_n_of_vertext) == 0:   #если у текущей вершины соседей не больше 1 или вообще нет соседей
+                    result_list_node.append(self.vertex[current_vertext])
+                    continue
+                elif len(list_n_of_vertext) > 1:                                 #если у текущей вершины соседей более 1
+                    dequeB = []
+                    while len(list_n_of_vertext) > 0:
+                        tmp_adjacency = list_n_of_vertext.pop(0)
+                        for item in list_n_of_vertext:
+                            if self.m_adjacency[item][tmp_adjacency] == 1:
+                                dequeB.append(tmp_adjacency)
+                    if len(dequeB) > 0:
+                        continue
+                    else:
+                        result_list_node.append(self.vertex[current_vertext])
+
+            else:
+                count_iter += 1             #счетчик пустых вершин
+        if count_iter == len(self.vertex):  #если список вершин пуст
+            return [] #?
+        return result_list_node
+
+
+
+
 """
 my_graph = SimpleGraph(9)
+
 my_graph.AddVertex('A')
 my_graph.AddVertex('B')
-
 my_graph.AddVertex('C')
 my_graph.AddVertex('D')
 my_graph.AddVertex('E')
@@ -166,42 +208,40 @@ my_graph.AddVertex('H')
 my_graph.AddVertex('I')
 
 my_graph.AddEdge(0,1)
-#my_graph.AddEdge(0,3)
-my_graph.AddEdge(1,0)
-
-my_graph.AddEdge(1,4)
-my_graph.AddEdge(1,2)
-my_graph.AddEdge(2,1)
-my_graph.AddEdge(2,5)
-my_graph.AddEdge(3,0)
-my_graph.AddEdge(3,6)
-my_graph.AddEdge(4,1)
-my_graph.AddEdge(4,7)
-my_graph.AddEdge(5,2)
-my_graph.AddEdge(5,8)
-my_graph.AddEdge(6,3)
-my_graph.AddEdge(6,7)
-my_graph.AddEdge(7,4)
-my_graph.AddEdge(7,6)
-my_graph.AddEdge(7,8)
-my_graph.AddEdge(8,7)
-my_graph.AddEdge(8,5)
 my_graph.AddEdge(0,4)
-my_graph.AddEdge(4,8)
-my_graph.AddEdge(8,4)
-my_graph.AddEdge(4,0)
+my_graph.AddEdge(0,3)
+
+my_graph.AddEdge(1,0)
+my_graph.AddEdge(1,5)
+
+my_graph.AddEdge(2,5)
+my_graph.AddEdge(2,6)
+
+my_graph.AddEdge(3,0)
+my_graph.AddEdge(3,4)
+my_graph.AddEdge(3,7)
 
 
+my_graph.AddEdge(4,3)
+my_graph.AddEdge(4,7)
+my_graph.AddEdge(4,5)
 
-#my_graph.RemoveEdge(0, 3)
+my_graph.AddEdge(5,1)
+my_graph.AddEdge(5,4)
+my_graph.AddEdge(5,2)
 
-#my_graph.RemoveEdge(3, 1)
+my_graph.AddEdge(6,2)
+my_graph.AddEdge(6,5)
+my_graph.AddEdge(6,8)
 
+my_graph.AddEdge(7,3)
+my_graph.AddEdge(7,4)
+
+my_graph.AddEdge(8,6)
 
 my_graph.PrintAllAdjacency()
 
-path = my_graph.BreadthFirstSearch(0,1)
+path = my_graph.WeakVertices()
 for item in path:
     print(item.Value, ' ', end='')
-#print()
 """
