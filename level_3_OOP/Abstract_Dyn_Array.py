@@ -276,12 +276,4 @@ class My_DynArray:
 
 
 
-a = My_DynArray()
 
-a.append(1)
-a.append(2)
-a.append(3)
-a.append(4)
-a.append(5)
-a.delete(4)
-print(a.len_array())
