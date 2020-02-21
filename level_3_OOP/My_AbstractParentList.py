@@ -6,6 +6,7 @@ class ParentNode:
         self.prev = None
 
 class ParentList(ABC):
+
     def __init__(self):  # создает пустой связный список
         self.clear()
 
