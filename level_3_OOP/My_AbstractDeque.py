@@ -1,78 +1,117 @@
 from abc import abstractmethod, ABC
 
-class My_Dequeu(ABC):
+class ParrentDeque(ABC):
+    CONST_ADD_FRONT_NIL = 0  # addFront() еще не вызывался
+    CONST_ADD_FRONT_OK = 1  # выполнился корректно
+    CONST_ADD_TAIL_NIL = 0  # addTaile() еще не вызывался
+    CONST_ADD_TAIL_OK = 1  # выполнился корректно
+    CONST_REMOVE_FRONT_NIL = 0  # removeFront() еще не вызывался
+    CONST_REMOVE_FRONT_OK = 1  # выполнился корректно
+    CONST_REMOVE_FRONT_ERR = 2  # очередь пустая
+    CONST_REMOVE_TAIL_NIL = 0  # removeTaile() еще не вызывался
+    CONST_REMOVE_TAIL_OK = 1  # выполнился корректно
+    CONST_REMOVE_TAIL_ERR = 2  # очередь пустая
+    CONST_SIZE_NIL = 0  # size() еще не вызывался
+    CONST_SIZE_OK = 1  # выполнился корректно
 
-    @abstractmethod
     def __init__(self):
         # создается структура под двустороннюю очередь.
-        pass
-
-    # СТАТУСЫ:
-    CONST_ADD_FRONT_NIL = 0     # addFront() еще не вызывался
-    CONST_ADD_FRONT_OK = 1      # выполнился корректно
-    CONST_ADD_TAIL_NIL = 0      # addTaile() еще не вызывался
-    CONST_ADD_TAIL_OK = 1       # выполнился корректно
-    CONST_REMOVE_FRONT_NIL = 0  # removeFront() еще не вызывался
-    CONST_REMOVE_FRONT_OK = 1   # выполнился корректно
-    CONST_REMOVE_FRONT_ERR = 2  # очередь пустая
-    CONST_REMOVE_TAIL_NIL = 0   # removeTaile() еще не вызывался
-    CONST_REMOVE_TAIL_OK = 1    # выполнился корректно
-    CONST_REMOVE_TAIL_ERR = 2   # очередь пустая
-    CONST_SIZE_NIL = 0          # size() еще не вызывался
-    CONST_SIZE_OK = 1           # выполнился корректно
+        self.deque = []
+        self.__addTail_status = self.CONST_ADD_TAIL_NIL
+        self.__addFront_status = self.CONST_ADD_FRONT_NIL
+        self.__removeTail_status = self.CONST_REMOVE_TAIL_NIL
+        self.__removeFront_status = self.CONST_REMOVE_FRONT_NIL
+        self.__size_status = self.CONST_SIZE_NIL
 
     # КОМАНДЫ:
-    # постусловие: элемент добавлен в начало очереди
+
     @abstractmethod
     def addFront(self):
         # добавление элемента в голову
         pass
 
-    # постусловие: элемент добавлен в конец очереди
-    @abstractmethod
-    def addTail(self):
-        # добавление элемента в хвост
-        pass
-
-    # предусловие: очередь не пустая
-    # постусловие: элемент удален из начала очереди
-    @abstractmethod
-    def removeFront(self):
-        # удаляет элемент из головы очереди
-        pass
-
-    # предусловие: очередь не пустая
-    # постусловие: элемент удален из конца очереди
     @abstractmethod
     def removeTail(self):
         # удаляет элемент из хвоста очереди
         pass
 
+    def addTail(self, item):
+        # добавление в хвост
+        self.deque.append(item)
+        self.__addTail_status = self.CONST_ADD_TAIL_OK
+
+    def removeFront(self):
+        # удаление из головы
+        if self.size() > 0:
+            self.__removeFront_status = self.CONST_REMOVE_FRONT_OK
+            return self.deque.pop(0)
+        self.__removeFront_status = self.CONST_REMOVE_FRONT_ERR
+
     # ЗАПРОСЫ:
 
-    @abstractmethod
     def size(self):
         # возвращает кол-во элементов в очереди
-        pass
+        self.__size_status = self.CONST_SIZE_OK
+        return len(self.deque)
 
     # ЗАПРОСЫ ДЛЯ СТАТУСОВ:
-    
+
+    def __get_addTail_status(self):
+        return self.__addTail_status
+
     @abstractmethod
-    def get_addTail_status(self):
+    def __get_addFront_status(self):
         pass
 
     @abstractmethod
-    def get_addFront_status(self):
+    def __get_removeTail_status(self):
         pass
 
-    @abstractmethod
-    def get_removeTail_status(self):
-        pass
+    def __get_removeFront_status(self):
+        return self.__removeFront_status
 
-    @abstractmethod
-    def get_removeFront_status(self):
-        pass
+    def __get_size_status(self):
+        return self.__size_status
 
-    @abstractmethod
-    def get_size_status(self):
-        pass
+class Queue(ParrentDeque):
+    CONST_ENQUEUE_OK = 1  # выполнился корректно
+    CONST_DEQUEUE_OK = 1  # выполнился корректно
+    CONST_DEQUEUE_ERR = 2  # очередь пустая
+
+    def enqueue(self, item):
+        self.addTail(item)
+        self.__enqueue_status = self.CONST_ENQUEUE_OK
+
+    def dequeue(self):
+        self.removeFront()
+        if self.__get_removeFront_status() < 2:
+            self.__dequeue_status = self.CONST_DEQUEUE_OK
+            return
+        self.__dequeue_status = self.CONST_DEQUEUE_ERR
+
+    def __get_enqueue_status(self):
+        return self.__enqueue_status
+
+    def __get_dequeue_status(self):
+        return self.__dequeue_status
+
+
+class Deque(ParrentDeque):
+
+    def addFront(self, item):
+        # добавление в голову
+        self.deque.insert(0, item)
+        self.__addFront_status = self.CONST_ADD_FRONT_OK
+
+    def removeTail(self):
+        # удаление из хвоста
+        if self.size() > 0:
+            self.__removeTail_status = self.CONST_REMOVE_TAIL_OK
+            return self.deque.pop(self.size() - 1)
+        self.__removeTail_status = self.CONST_REMOVE_TAIL_ERR
+
+    def __get_addFront_status(self):
+        return self.__addFront_status
+
+    def __get_removeTail_status(self):
+        return self.__removeTail_status
