@@ -25,21 +25,14 @@ class ParrentDeque(ABC):
 
     # КОМАНДЫ:
 
-    @abstractmethod
-    def addFront(self):
-        # добавление элемента в голову
-        pass
-
-    @abstractmethod
-    def removeTail(self):
-        # удаляет элемент из хвоста очереди
-        pass
-
+    # постусловие: элемент добавлен в хвост очереди
     def addTail(self, item):
         # добавление в хвост
         self.deque.append(item)
         self.__addTail_status = self.CONST_ADD_TAIL_OK
 
+    # предусловие: очередь не пустая
+    # постусловие: элемент удален из головы
     def removeFront(self):
         # удаление из головы
         if self.size() > 0:
@@ -58,14 +51,6 @@ class ParrentDeque(ABC):
 
     def __get_addTail_status(self):
         return self.__addTail_status
-
-    @abstractmethod
-    def __get_addFront_status(self):
-        pass
-
-    @abstractmethod
-    def __get_removeTail_status(self):
-        pass
 
     def __get_removeFront_status(self):
         return self.__removeFront_status
@@ -98,11 +83,14 @@ class Queue(ParrentDeque):
 
 class Deque(ParrentDeque):
 
+    # постусловие: элемент добавлен в голову очереди
     def addFront(self, item):
         # добавление в голову
         self.deque.insert(0, item)
         self.__addFront_status = self.CONST_ADD_FRONT_OK
 
+    # предусловие: очередь не пустая
+    # постусловие: элемент удален из хвоста очереди
     def removeTail(self):
         # удаление из хвоста
         if self.size() > 0:
